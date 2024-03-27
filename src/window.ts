@@ -1,4 +1,4 @@
-type Rides = [string, string[]];
+export type Rides = [string, string[]];
 let rides: Rides[] = [];
 let names: string[] = []
 
@@ -59,11 +59,13 @@ export function showWindowChooseGroup(): void {
 				y: 40,
 				tooltip: "Remove group",
 				onClick: () => {
+					names.splice(index);
+					rides.splice(index);
 				},
 				image: 5165,
 			},
 			{
-				name: "removeGroup",
+				name: "seeGroup",
 				type: "button",
 				width: 30,
 				height: 26,
@@ -199,7 +201,6 @@ function createCheckboxWidget(): WidgetDesc[] {
 function addToGroup(ids: string[]) {
 	names.push(groupName)
 	rides.push([groupName, ids])
-	
 	showWindowChooseGroup();
 }
 
@@ -225,4 +226,18 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 			widgets.push(widget);
 		}
 		return widgets;
+}
+
+export function setRides(ridesNew: Rides[]) {
+	rides = ridesNew;
+}
+
+export function getRides(): Rides[] {
+	return rides;
+}
+export function getNames(): string[] {
+	return names;
+}
+export function setNames(namesNew: string[]) {
+	names = namesNew;
 }
