@@ -1,13 +1,20 @@
 # THIS IS A DEMO VERSION OF THE ENHANCED RIDEINFO WINDOW
-- This demo version (CODENAME: Zenith V0.0.1) is not the final version of the plugin
+- This demo version (CODENAME: Zenith V0.0.2) is not the final version of the plugin
 - It is only a demo to show the functionality of the plugin
 - It is not recommended to use this version in a production environment
 - As it contains bugs and unfinished features
 
 # Enhanced-RideInfo-Window
-This plugin is a extension on the already existing RideWindow. 
+This plugin is a extension on the already existing RideWindow.
+It allouws you to group rides and see more information about the rides.
 It adds a few more features to the window, such as:
 - Grouping of rides
+
+It is a different type of rideWindow than the default one, so it is recommended to use the default one if you are not sure what you are doing.(Like deleting rides)
+
+### screenshots
+![screenshot](C:\Users\larsm\OneDrive\Documents\GitHub\Enhanced-RideInfo-Window\img\EHRIS1.png)
+![screenshot](C:\Users\larsm\OneDrive\Documents\GitHub\Enhanced-RideInfo-Window\img\EHRIS2.png)
 
 ## Installation
 1. Download the latest release from the [releases page](

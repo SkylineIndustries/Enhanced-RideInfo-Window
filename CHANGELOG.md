@@ -17,3 +17,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Changed
 
 ### Removed
+
+## [DEMO Zenith V0.0.2] - 2024-03-28
+### Added
+- Added the ability to see individual ride information
+
+### Changed
+- Changed the way the group window is displayed
+- Changed the way a group is deleted
+
+### Removed
