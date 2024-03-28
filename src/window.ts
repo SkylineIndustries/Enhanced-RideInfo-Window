@@ -7,6 +7,7 @@ const windowTag = "Enhanced-RideInfo-Window";
 let windowViewGroup: Window = ui.getWindow(windowTag);
 let windowChooseGroup: Window = ui.getWindow(windowTag);
 let windowAddGroup: Window = ui.getWindow(windowTag);
+let windowShowRide: Window = ui.getWindow(windowTag);
 let emptyWindow: Window;
 let groupName: string;
 let index: number = 0;
@@ -210,24 +211,67 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 	let ride: string[] = [];
 
 	ride.push(...rides[id][1])
+	var listview: ListViewItem = ride;
 
-	for (let i = 0; i < ride.length; i++) {
 			let widget: WidgetDesc = {
 				name: "label" + height,
-				type: "label",
-				width: 500,
-				height: 24,
-				x: 15,
+				type: "listview",
+				width: 300,
+				height: 600,
+				x: 5,
 				y: height,
 				tooltip: "Add to group",
-				text: ride[i],
+				items: listview,
+				canSelect: true,
+				onClick: (item: number, column: number) => openRideWindow(ride[item])
 		};
-			height += 10;
 			widgets.push(widget);
-		}
 		return widgets;
 }
 
+function openRideWindow(item: string) {
+	let filteredRides: Ride[] = map.rides.filter(r => r.classification === "ride" && r.name === item);
+	showWindowRide(filteredRides);
+
+}
+
+function showWindowRide(ride: Ride[]) {
+	let ride1: Ride = ride[0];
+
+	if (windowShowRide) {
+		windowShowRide.bringToFront();
+		return;
+	}
+	const windowDesc: WindowDesc = {
+		classification: windowTag,
+		width: 150,
+		height: 80,
+		title: 'Ride-Window ' + ride1.name,
+		colours: [],
+		widgets: [
+			{
+				type: 'label',
+				x: 5,
+				y: 40,
+				width: 550,
+				height: 20,
+				text: "Age: " + ride1.age,
+			},
+			{
+				type: 'label',
+				x: 5,
+				y: 60,
+				width: 550,
+				height: 20,
+				text: "BuildDate: " + ride1.buildDate,
+			}
+		],
+		onClose() {
+			windowShowRide = emptyWindow;
+		}
+	}
+	windowShowRide = ui.openWindow(windowDesc);
+}
 export function setRides(ridesNew: Rides[]) {
 	rides = ridesNew;
 }
