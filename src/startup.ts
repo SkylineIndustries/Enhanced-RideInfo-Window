@@ -1,4 +1,4 @@
-import { showWindowChooseGroup, setRides, getRides, setNames, getNames } from './window';
+import { showWindowChooseGroup, setRides, getRides, setNames, getNames, contacxtAction } from './MainWindow/window';
 var saveData = context.getParkStorage();
 
 export function startup()
@@ -17,5 +17,7 @@ export function startup()
 			setRides(rides);
 			setNames(names);
 		}
+
+		contacxtAction()
 	}
 }

@@ -1,8 +1,8 @@
-# THIS IS A DEMO VERSION OF THE ENHANCED RIDEINFO WINDOW
-- This demo version (CODENAME: Zenith V0.0.2) is not the final version of the plugin
+# THIS IS A MILESTONE VERSION OF THE ENHANCED RIDEINFO WINDOW
+- This Milestone version (CODENAME: Zenith V0.0.3) is not the final version of the plugin
 - It is only a demo to show the functionality of the plugin
 - It is not recommended to use this version in a production environment
-- As it contains bugs and unfinished features
+- It uses the save function to save the groups in the park file. It `may` corrupt the file or destroy the plugin in some form
 
 # Enhanced-RideInfo-Window
 This plugin is a extension on the already existing RideWindow.
