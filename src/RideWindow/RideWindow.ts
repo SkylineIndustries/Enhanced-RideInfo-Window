@@ -20,7 +20,7 @@ export function showWindowRide(ride: Ride) {
 		width: 400,
 		height: 600,
 		title: 'Ride-Window ' + ride1.name,
-		colours: [],
+		colours: [0o32, 0o30],
 		widgets: [
 			{
 				type: 'label',

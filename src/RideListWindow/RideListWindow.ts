@@ -21,7 +21,7 @@ export function showWindowAddNewGroup(): void {
 		width: 310,
 		height: 700,
 		title: 'add new group',
-		colours: [],
+		colours: [0o32, 0o30],
 		widgets: createCheckboxWidget(),
 		onClose() {
 			windowAddGroup = emptyWindow;

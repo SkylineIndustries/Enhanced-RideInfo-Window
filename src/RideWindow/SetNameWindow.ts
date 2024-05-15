@@ -16,7 +16,7 @@ export function showWindowNameRide(ride: Ride) {
 		width: 300,
 		height: 80,
 		title: 'Ride-Window ' + ride.name,
-		colours: [],
+		colours: [0o32, 0o30],
 		widgets: [
 			{
 				type: 'textbox',

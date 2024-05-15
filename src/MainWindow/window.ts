@@ -2,7 +2,7 @@ import { rides, names, showWindowAddNewGroup, createCheckboxWidget, } from "../R
 import { ArgsRideName } from "./ArgsRideName";
 import { ArgsRemoveRide } from "./ArgsRemoveRide";
 
-export { getNames, getRides, setNames, setRides } from "../RideListWindow/RideListWindow";
+export { getNames, getRides, setNames, setRides, Rides } from "../RideListWindow/RideListWindow";
 import { openRideWindow } from "../RideWindow/RideWindowFunctions"
 import { reloadWindowShowRide, closeWindowShowRide } from "../RideWindow/RideWindow"
 
@@ -22,7 +22,7 @@ export function showWindowChooseGroup(): void {
 		width: 150,
 		height: 80,
 		title: 'Enhanced-RideInfo-Window',
-		colours: [],
+		colours: [0o32, 0o30],
 		widgets: [
 			{
 				name: "allIds",
@@ -99,7 +99,7 @@ function showWindowViewGroup(): void {
 		width: 310,
 		height: 700,
 		title: 'View group ' + names[index],
-		colours: [],
+		colours: [0o32, 0o30],
 		widgets: getAllRidesOfAGroup(index),
 		onClose() {
 			windowViewGroup = emptyWindow;
@@ -138,6 +138,7 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 		items: listview,
 		canSelect: true,
 		onClick: (item: number, column: number) => {
+			console.log(ride1[item].name)
 			openRideWindow(ride1[item])
 		}
 	};
@@ -145,7 +146,7 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 	return widgets;
 }
 
-export function contacxtAction() {
+export function contextAction() {
 	context.subscribe("action.execute", (event) => {
 		if (event.action == "ridesetname") {
 			let args = event.args as ArgsRideName;
@@ -185,5 +186,5 @@ export function contacxtAction() {
 }
 
 function replaceNameInGroupWindow(ride: Ride) {
-
+	console.log(ride)
 }

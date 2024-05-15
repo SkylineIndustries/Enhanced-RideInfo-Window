@@ -47,3 +47,4 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Renaming of a group
 - Setting the colorscheme of a ride
 - Ridewindow following a train
+- Saving groups in file
