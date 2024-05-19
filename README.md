@@ -1,8 +1,6 @@
 # THIS IS A MILESTONE VERSION OF THE ENHANCED RIDEINFO WINDOW
-- This Milestone version (CODENAME: Zenith V0.0.3) is not the final version of the plugin
-- It is only a demo to show the functionality of the plugin
-- It is not recommended to use this version in a production environment
-- It uses the save function to save the groups in the park file. It `may` corrupt the file or destroy the plugin in some form
+- This Milestone version (CODENAME: ThrillTracker V0.0.3) is not the final version of the plugin
+- It uses the save and load functions of the plugin, it works but is not qauaranteed to not break your save, so use with caution!
 
 # Enhanced-RideInfo-Window
 This plugin is a extension on the already existing RideWindow.
@@ -40,7 +38,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 - Thanks to the OpenRCT2 community for the support
 
 ## Versioning
-see the [tags on this repository]
+current Version: [M2 ThrillTracker V0.0.4]
 
 ## Changelog
 see the [CHANGELOG.md](CHANGELOG.md) file for details

@@ -1,5 +1,5 @@
-import { ArgsRemove } from "../MainWindow/ArgsRemove";
-import { showWindowNameRide} from "./SetNameWindow"
+import {ArgsRemove} from "../MainWindow/ArgsRemove";
+import {showWindowNameRide} from "./SetNameWindow"
 
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";
@@ -180,6 +180,7 @@ export function showWindowRide(ride: Ride) {
 				height: 30,
 				image: 'copy',
 				onClick: () => {
+                    windowShowRide.close()
 					showWindowNameRide(ride1);
 				}
 			},
@@ -192,8 +193,7 @@ export function showWindowRide(ride: Ride) {
 				height: 30,
 				image: 5165,
 				onClick: () => {
-					let argsRemove: ArgsRemove = new ArgsRemove(ride.id, 0);
-					let rideDemolishArgs: RideDemolishArgs = argsRemove;
+                    let rideDemolishArgs: RideDemolishArgs = new ArgsRemove(ride.id, 0);
 					context.executeAction("ridedemolish", rideDemolishArgs, (result) => {
 						closeWindowShowRide()
 						console.log("RIDE IS REMOVED: ", result);
@@ -219,6 +219,7 @@ function moveCamera(ride: Ride) {
 		windowShowRide.findWidget<ViewportWidget>('viewportShowRide').viewport.moveTo(station.entrance)
 	}
 	else {
+        console.log("No station found")
 	}
 }
 
@@ -259,7 +260,6 @@ function setOTCImage(status: string) {
 }
 
 export function closeWindowShowRide() {
-	console.log("YES")
 	windowShowRide.close();
 }
 

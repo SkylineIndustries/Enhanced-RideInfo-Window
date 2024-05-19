@@ -14,7 +14,10 @@
 		"outDir": "out",
 		"strict": true,
 		"target": "es5",
-		"lib": [ "es5" ]
+		"lib": [
+          "es5",
+          "dom"
+        ]
 	},
 	"include": [
 		"./lib/**/*.ts",

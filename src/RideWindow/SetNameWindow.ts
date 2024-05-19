@@ -1,5 +1,6 @@
-import { ArgsName } from "../MainWindow/ArgsName";
-import { } from "../MainWindow/ArgsRideName"
+import {ArgsName} from "../MainWindow/ArgsName";
+import {showWindowRide} from "./RideWindow";
+import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
 
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";
@@ -38,11 +39,16 @@ export function showWindowNameRide(ride: Ride) {
 				height: 30,
 				image: 'copy',
 				onClick: () => {
-					let argsName: ArgsName = new ArgsName(ride.id, rideName, 0);
-					let rideSetNameArgs: RideSetNameArgs = argsName;
+                    if (rideName == "") {
+                        showWindowError("Ride name is empty")
+                        return;
+                    }
+                    let rideSetNameArgs: RideSetNameArgs = new ArgsName(ride.id, rideName, 0);
 					context.executeAction("ridesetname", rideSetNameArgs, (result) => {
 						console.log("RIDE IS RENAMED: ", result);
 					});
+                    windowShowNameRide.close()
+                    showWindowRide(ride);
 				}
 			}
 		],

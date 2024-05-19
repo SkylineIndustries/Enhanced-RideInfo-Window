@@ -1,4 +1,5 @@
-import { showWindowChooseGroup } from "../MainWindow/window";
+import {checkGroupName, showWindowChooseGroup} from "../MainWindow/window";
+import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
 
 
 export type Rides = [string, Ride[]];
@@ -18,8 +19,8 @@ export function showWindowAddNewGroup(): void {
 	}
 	const windowDesc: WindowDesc = {
 		classification: windowTag,
-		width: 310,
-		height: 700,
+		width: 700,
+		height: 850,
 		title: 'add new group',
 		colours: [0o32, 0o30],
 		widgets: createCheckboxWidget(),
@@ -38,12 +39,12 @@ export function createCheckboxWidget(): WidgetDesc[] {
 	let widgets: WidgetDesc[] = [];
 
 	for (let i = 0; i < rideNames.length; i++) {
-		if (i % 65 == 0 && i != 0) {
-			x = x + 120
+		if (i % 60 == 0 && i != 0) {
+			x = x + 130
 			height = 10;
 		}
 		let widget: WidgetDesc = {
-			name: "addGroup" + height,
+			name: "addGroup" + i,
 			type: "checkbox",
 			width: 24,
 			height: 24,
@@ -86,9 +87,15 @@ export function createCheckboxWidget(): WidgetDesc[] {
 			y: 650,
 			tooltip: "Create new group",
 			onClick: () => {
+                if (rideIds.length > 0 && groupName != "" && groupName != undefined && !checkGroupName(groupName)){
 				addToGroup(rideIds);
 				rideIds = []
 				windowAddGroup.close();
+                }
+                else {
+                    showWindowError("Group name is empty or group name is already exist or no rides selected")
+                    console.log("GROUP NAME IS NULL OR GROUP NAME IS ALREADY EXIST OR NO RIDES SELECTED")
+                }
 			},
 			image: "cheats",
 		}
@@ -97,13 +104,12 @@ export function createCheckboxWidget(): WidgetDesc[] {
 }
 
 function getAllRideNames(): Ride[] {
-	var nameRides: Ride[] = [];
+    let nameRides: Ride[] = [];
 	map.rides.filter(r => r.classification === "ride").sort((a, b) => a.name.localeCompare(b.name)).map(r => nameRides.push(r));
 
-	var nameOfRides: Ride[] = [];
-	for (let i = 0; i < nameRides.length; i++) {
-		var ride: Ride = nameRides[i];
-		nameOfRides.push(ride)
+    let nameOfRides: Ride[] = [];
+	for (const element of nameRides) {
+        nameOfRides.push(element)
 	}
 
 	return nameRides;

@@ -5,6 +5,8 @@ import { ArgsRemoveRide } from "./ArgsRemoveRide";
 export { getNames, getRides, setNames, setRides, Rides } from "../RideListWindow/RideListWindow";
 import { openRideWindow } from "../RideWindow/RideWindowFunctions"
 import { reloadWindowShowRide, closeWindowShowRide } from "../RideWindow/RideWindow"
+import {showWindowRenameGroup} from "./ShowWindowRenameGroup";
+import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
 
 const windowTag = "Enhanced-RideInfo-Window";
 let windowViewGroup: Window = ui.getWindow(windowTag);
@@ -46,8 +48,8 @@ export function showWindowChooseGroup(): void {
 				y: 40,
 				tooltip: "Create new group",
 				onClick: () => {
-					createCheckboxWidget(),
-						windowChooseGroup.close()
+					createCheckboxWidget()
+                        windowChooseGroup.close()
 					showWindowAddNewGroup()
 				},
 				image: "cheats",
@@ -61,6 +63,10 @@ export function showWindowChooseGroup(): void {
 				y: 40,
 				tooltip: "Remove group",
 				onClick: () => {
+                    if (names[index] == undefined && rides[index] == undefined) {
+                        showWindowError("No group to remove")
+                        return;
+                    }
 					names.splice(index);
 					rides.splice(index);
 				},
@@ -75,10 +81,34 @@ export function showWindowChooseGroup(): void {
 				y: 40,
 				tooltip: "open group ",
 				onClick: () => {
+                    if (names[index] == undefined && rides[index] == undefined) {
+                        showWindowError("No group to open")
+                        return;
+                    }
 					showWindowViewGroup()
-				},
+                    windowChooseGroup.close()
+                },
 				image: "fast_forward",
 			},
+            {
+                name: "renameGroup",
+                type: "button",
+                width: 30,
+                height: 26,
+                x: 100,
+                y: 40,
+                tooltip: "rename group",
+                image: 'copy',
+                onClick: () => {
+                    if(names[index] != undefined) {
+                        showWindowRenameGroup(names[index], index)
+                        windowChooseGroup.close()
+                    }
+                    else {
+                        showWindowError("No group to rename")
+                    }
+                }
+            }
 		],
 		onClose() {
 			windowChooseGroup = emptyWindow;
@@ -125,7 +155,7 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 		ride1.push(rideInfo)
 	});
 
-	var listview: ListViewItem = ride;
+    let listview: ListViewItem = ride;
 
 	let widget: WidgetDesc = {
 		name: "label" + height,
@@ -137,8 +167,7 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 		tooltip: "Open a ride",
 		items: listview,
 		canSelect: true,
-		onClick: (item: number, column: number) => {
-			console.log(ride1[item].name)
+		onClick: (item: number) => {
 			openRideWindow(ride1[item])
 		}
 	};
@@ -151,11 +180,11 @@ export function contextAction() {
 		if (event.action == "ridesetname") {
 			let args = event.args as ArgsRideName;
 
-			for (let i = 0; i < rides.length; i++) {
-				for (let j = 0; j < rides[i][1].length; j++) {
-					if (rides[i][1][j].id === args.ride) {
-						replaceNameInGroupWindow(rides[i][1][j])
-						rides[i][1][j].name = args.name;
+			for (const element of rides) {
+                for (let j = 0; j < element[1].length; j++) {
+                    if (element[1][j].id === args.ride) {
+                        replaceNameInGroupWindow(element[1][j])
+                        element[1][j].name = args.name;
 					}
 				}
 			}
@@ -164,15 +193,14 @@ export function contextAction() {
 		if (event.action == "ridedemolish") {
 			let args = event.args as ArgsRemoveRide;
 
-			for (let i = 0; i < rides.length; i++) {
-				for (let j = 0; j < rides[i][1].length; j++) {
-					if (rides[i][1][j].id === args.ride) {
-						rides[i][1].splice(j, 1);
-					}
-					console.log(rides[i][0].length)
-					if (rides[i][1].length == 0) {
-						for (let k = 0; k < names.length; k++) {
-							if (names[k] == rides[i][0]) {
+			for (const element of rides) {
+                for (let j = 0; j < element[1].length; j++) {
+                    if (element[1][j].id === args.ride) {
+                        element[1].splice(j, 1);
+                    }
+                    if (element[1].length == 0) {
+                        for (let k = 0; k < names.length; k++) {
+                            if (names[k] == element[0]) {
 								names.splice(k, 1)
 								rides.splice(k, 1)
 							}
@@ -185,6 +213,25 @@ export function contextAction() {
 	})
 }
 
+export function setGroupName(index: number, name: string, oldName: string) {
+    names[index] = name;
+
+    for (const element of rides) {
+        if (element[0] == oldName) {
+            element[0] = name;
+        }
+    }
+}
+
 function replaceNameInGroupWindow(ride: Ride) {
 	console.log(ride)
+}
+
+export function checkGroupName(name: string): boolean {
+    for (const element of names) {
+        if (element == name) {
+            return true;
+        }
+    }
+    return false;
 }
