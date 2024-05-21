@@ -46,14 +46,16 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Planned features for M2
 - Renaming of a group
 - Setting the colorscheme of a ride
-- Ridewindow following a train
 - Saving groups in file
 
-## [M2 ThrillTracker V0.0.4] - 2024-06-14
+## [M2 ThrillTracker V0.0.4] - 2024-06-24
 ### Added
 - Added the ability to rename a group
 - Added the ability to save a group to a file
 - Added custom error messages
+- Added more ride information to the ride window
+- Added the ability to set the color of a ride
+- 
 
 ### Changed
 - Changed the way the list of rides is displayed
@@ -64,4 +66,5 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Planned features for beta release
 - final touches to the ride window
 - rework the windows when a ride/group is renamed/removed.
+- 
 

@@ -19,11 +19,11 @@ export function showWindowAddNewGroup(): void {
 	}
 	const windowDesc: WindowDesc = {
 		classification: windowTag,
-		width: 700,
-		height: 850,
+		width: 670,
+		height: 570,
 		title: 'add new group',
 		colours: [0o32, 0o30],
-		widgets: createCheckboxWidget(),
+		widgets: createListviewWidget(),
 		onClose() {
 			windowAddGroup = emptyWindow;
 		}
@@ -31,48 +31,50 @@ export function showWindowAddNewGroup(): void {
 	windowAddGroup = ui.openWindow(windowDesc);
 }
 
-export function createCheckboxWidget(): WidgetDesc[] {
+export function createListviewWidget(): WidgetDesc[] {
 	let rideNames: Ride[] = getAllRideNames();
 	let rideIds: Ride[] = [];
-	let height = 10;
-	let x = 5;
 	let widgets: WidgetDesc[] = [];
-
-	for (let i = 0; i < rideNames.length; i++) {
-		if (i % 60 == 0 && i != 0) {
-			x = x + 130
-			height = 10;
-		}
-		let widget: WidgetDesc = {
-			name: "addGroup" + i,
-			type: "checkbox",
-			width: 24,
-			height: 24,
-			x: x,
-			y: height,
-			tooltip: "Add to group",
-			text: rideNames[i].name,
-			onChange: () => {
-				if (rideIds.indexOf(rideNames[i]) !== -1) {
-					let index = (rideIds.indexOf(rideNames[i]));
-					rideIds.splice(index, 1);
-				}
-				else {
-					rideIds.push(rideNames[i])
-				}
-			}
-		};
-		height += 10;
-		widgets.push(widget);
-	}
-	widgets.push(
+    widgets.push(
+        {
+            name: "addRide",
+            type: "listview",
+            width: 300,
+            height: 500,
+            x: 5,
+            y: 20,
+            tooltip: "Select ride to add to group",
+            items: rideNames.map(r => r.name),
+            onClick: (index: number) => {
+                if (rideIds.some(r => r.name === rideNames[index].name)) {
+                    showWindowError("Ride is already selected");
+                    return;
+                }
+                rideIds.push(rideNames[index]);
+                windowAddGroup.findWidget<ListViewWidget>('removeRide').items = rideIds.map(r => r.name);
+            }
+        },
+        {
+        name: "removeRide",
+        type: "listview",
+        width: 300,
+        height: 500,
+        x: 350,
+        y: 20,
+        tooltip: "Select ride to remove in a group",
+        items: rideIds.map(r => r.name),
+        onClick: (index: number) => {
+            rideIds.splice(index, 1);
+            windowAddGroup.findWidget<ListViewWidget>('removeRide').items = rideIds.map(r => r.name);
+        }
+        },
 		{
 			name: "addGroup",
 			type: "textbox",
 			width: 100,
 			height: 24,
-			x: 200,
-			y: 624,
+			x: 5,
+			y: 530,
 			tooltip: "Create new group",
 			onChange: (name: string) => {
 				groupName = name;
@@ -83,8 +85,8 @@ export function createCheckboxWidget(): WidgetDesc[] {
 			type: "button",
 			width: 30,
 			height: 26,
-			x: 200,
-			y: 650,
+			x: 120,
+			y: 530,
 			tooltip: "Create new group",
 			onClick: () => {
                 if (rideIds.length > 0 && groupName != "" && groupName != undefined && !checkGroupName(groupName)){
@@ -94,7 +96,6 @@ export function createCheckboxWidget(): WidgetDesc[] {
                 }
                 else {
                     showWindowError("Group name is empty or group name is already exist or no rides selected")
-                    console.log("GROUP NAME IS NULL OR GROUP NAME IS ALREADY EXIST OR NO RIDES SELECTED")
                 }
 			},
 			image: "cheats",

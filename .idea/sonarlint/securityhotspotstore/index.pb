@@ -39,3 +39,9 @@ S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 ]
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
+W
+'src/RideWindow/RideSetAppearanceArgs.ts,0\1\01f8c07e84de58e129dd0670c4fe6da47d46deae
+<
+img/Logo.txt,7\5\759c98abda2e1c87db438855e630d298422558c6
+P
+ src/InfoWindow/ShowInfoWindow.ts,3\c\3cc657899a6358e7e7e70e642854ba5738f525b4

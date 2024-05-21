@@ -1,4 +1,4 @@
-import { rides, names, showWindowAddNewGroup, createCheckboxWidget, } from "../RideListWindow/RideListWindow";
+import {rides, names, showWindowAddNewGroup, createListviewWidget,} from "../RideListWindow/RideListWindow";
 import { ArgsRideName } from "./ArgsRideName";
 import { ArgsRemoveRide } from "./ArgsRemoveRide";
 
@@ -7,6 +7,7 @@ import { openRideWindow } from "../RideWindow/RideWindowFunctions"
 import { reloadWindowShowRide, closeWindowShowRide } from "../RideWindow/RideWindow"
 import {showWindowRenameGroup} from "./ShowWindowRenameGroup";
 import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
+import {showInfoWindow} from "../InfoWindow/ShowInfoWindow";
 
 const windowTag = "Enhanced-RideInfo-Window";
 let windowViewGroup: Window = ui.getWindow(windowTag);
@@ -21,7 +22,7 @@ export function showWindowChooseGroup(): void {
 	}
 	const windowDesc: WindowDesc = {
 		classification: windowTag,
-		width: 150,
+		width: 170,
 		height: 80,
 		title: 'Enhanced-RideInfo-Window',
 		colours: [0o32, 0o30],
@@ -29,7 +30,7 @@ export function showWindowChooseGroup(): void {
 			{
 				name: "allIds",
 				type: "dropdown",
-				width: 100,
+				width: 150,
 				height: 10,
 				x: 5,
 				y: 20,
@@ -48,7 +49,7 @@ export function showWindowChooseGroup(): void {
 				y: 40,
 				tooltip: "Create new group",
 				onClick: () => {
-					createCheckboxWidget()
+                    createListviewWidget()
                         windowChooseGroup.close()
 					showWindowAddNewGroup()
 				},
@@ -107,6 +108,19 @@ export function showWindowChooseGroup(): void {
                     else {
                         showWindowError("No group to rename")
                     }
+                }
+            },
+            {
+                name: "infoPlugin",
+                type: "button",
+                width: 30,
+                height: 26,
+                x: 130,
+                y: 40,
+                tooltip: "Open info window",
+                image: 'simulate',
+                onClick: () => {
+                    showInfoWindow()
                 }
             }
 		],
@@ -210,7 +224,10 @@ export function contextAction() {
 			}
 			closeWindowShowRide();
 		}
-	})
+        if (event.action == "ridesetappearance") {
+            console.log("Colour set: ", event.args);
+        }
+        })
 }
 
 export function setGroupName(index: number, name: string, oldName: string) {

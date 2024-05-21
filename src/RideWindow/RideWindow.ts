@@ -1,5 +1,7 @@
 import {ArgsRemove} from "../MainWindow/ArgsRemove";
 import {showWindowNameRide} from "./SetNameWindow"
+import {RideSetAppearanceArgs} from "./RideSetAppearanceArgs";
+import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
 
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";
@@ -36,7 +38,7 @@ export function showWindowRide(ride: Ride) {
 				y: 60,
 				width: 550,
 				height: 20,
-				text: "Intensity: " + ride1.intensity
+				text: "Intensity: " + caclulateIEN(ride1.intensity).toFixed(2)
 			},
 			{
 				type: 'label',
@@ -44,7 +46,7 @@ export function showWindowRide(ride: Ride) {
 				y: 80,
 				width: 550,
 				height: 20,
-				text: "Exciment: " + ride1.excitement
+				text: "Exciment: " + caclulateIEN(ride1.excitement).toFixed(2)
 			},
 			{
 				type: 'label',
@@ -52,8 +54,32 @@ export function showWindowRide(ride: Ride) {
 				y: 100,
 				width: 550,
 				height: 20,
-				text: "Nausea: " + ride1.nausea
+				text: "Nausea: " + caclulateIEN(ride1.nausea).toFixed(2)
 			},
+            {
+                type: 'label',
+                x: 5,
+                y: 120,
+                width: 550,
+                height: 20,
+                text: "Total customers: " + ride1.totalCustomers
+            },
+            {
+                type: 'label',
+                x: 5,
+                y: 140,
+                width: 550,
+                height: 20,
+                text: "Total profit: " + ride1.totalProfit
+            },
+            {
+                type: 'label',
+                x: 5,
+                y: 160,
+                width: 550,
+                height: 20,
+                text: "Downtime: " + ride1.downtime
+            },
 			{
 				type: 'label',
 				name: 'test',
@@ -199,7 +225,73 @@ export function showWindowRide(ride: Ride) {
 						console.log("RIDE IS REMOVED: ", result);
 					});
 				}
-			}
+			},
+            {
+                name: 'ColorPickerTrack1',
+                type: 'colourpicker',
+                x: 300,
+                y: 455,
+                width: 10,
+                height: 10,
+                colour: ride.colourSchemes[0].main,
+                tooltip: 'Main',
+                onChange: (colour) => {
+                    try {
+                        let args: RideSetAppearanceArgs = new RideSetAppearanceArgs(ride.id, 0, colour, 0, 0);
+                        context.executeAction("ridesetappearance", args, result => {
+                            console.log(result)
+                        })
+                    }
+                    catch (e) {
+                        showWindowError("Error setting colour, please try again.")
+                        return
+                    }
+                }
+            },
+            {
+                name: 'ColorPickerTrack2',
+                type: 'colourpicker',
+                x: 320,
+                y: 455,
+                width: 10,
+                height: 10,
+                colour: ride.colourSchemes[0].additional,
+                tooltip: 'Additional',
+                onChange: (colour) => {
+                    try {
+                        let args: RideSetAppearanceArgs = new RideSetAppearanceArgs(ride.id, 1, colour, 0, 0);
+                        context.executeAction("ridesetappearance", args, result => {
+                            console.log(result)
+                        })
+                    }
+                    catch (e) {
+                        showWindowError("Error setting colour, please try again.")
+                        return
+                    }
+                },
+            },
+            {
+                name: 'ColorPickerTrack3',
+                type: 'colourpicker',
+                x: 340,
+                y: 455,
+                width: 10,
+                height: 10,
+                colour: ride.colourSchemes[0].supports,
+                onChange: (colour) => {
+                    try {
+                        let args: RideSetAppearanceArgs = new RideSetAppearanceArgs(ride.id, 0, colour, 2, 0);
+                        context.executeAction("ridesetappearance", args, result => {
+                            console.log(result)
+                        })
+                    }
+                    catch (e) {
+                        showWindowError("Error setting colour, please try again.")
+                        return
+                    }
+                },
+                tooltip: 'Supports'
+            },
 		],
 		onClose() {
 			windowShowRide = emptyWindow;
@@ -224,17 +316,17 @@ function moveCamera(ride: Ride) {
 }
 
 function setRidePrice(ride: Ride, status: string) {
-	let price: number[] = ride.price;
-
-	if (status === 'IN') {
-		price[0]++;
+	let price: number = ride.price[0];
+	if (status === 'IN' && price >=0 && price < 200) {
+		price++;
 	}
-	else {
-		price[0]--;
+	else if (status === 'DE' && price > 0 && price <= 200){
+		price--;
 	}
-	context.executeAction("ridesetprice", { ride: ride.id, price: price[0], isPrimaryPrice: true });
-	ridePrice = ride.price.toString();
-	windowShowRide.findWidget<SpinnerWidget>('spinnerPrice').text = ridePrice;
+    let priceDecimal: number = price / 10;
+    let formattedPrice: string = priceDecimal.toFixed(2);
+	context.executeAction("ridesetprice", { ride: ride.id, price: price, isPrimaryPrice: true });
+    windowShowRide.findWidget<SpinnerWidget>('spinnerPrice').text = formattedPrice;
 }
 
 function setOTCImage(status: string) {
@@ -265,4 +357,8 @@ export function closeWindowShowRide() {
 
 export function reloadWindowShowRide() {
 	windowShowRide.title = "Ride-Window " + ride1.name;
+}
+
+function caclulateIEN(value: number) {
+    return value /100;
 }
