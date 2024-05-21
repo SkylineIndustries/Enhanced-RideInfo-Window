@@ -5,7 +5,7 @@ import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
 
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";
-let windowShowRide: Window = ui.getWindow(windowTag);
+export let windowShowRide: Window = ui.getWindow(windowTag);
 let ridePrice: string = '0';
 let ride1: Ride;
 export function showWindowRide(ride: Ride) {
@@ -194,7 +194,6 @@ export function showWindowRide(ride: Ride) {
 				onClick: () => {
 					context.executeAction("ridesetstatus", { ride: ride1.id, status: 0 })
 					setOTCImage('closed')
-
 				}
 			},
 			{
@@ -206,7 +205,6 @@ export function showWindowRide(ride: Ride) {
 				height: 30,
 				image: 'copy',
 				onClick: () => {
-                    windowShowRide.close()
 					showWindowNameRide(ride1);
 				}
 			},

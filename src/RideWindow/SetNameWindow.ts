@@ -1,5 +1,5 @@
 import {ArgsName} from "../MainWindow/ArgsName";
-import {showWindowRide} from "./RideWindow";
+import { windowShowRide} from "./RideWindow";
 import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
 
 let emptyWindow: Window;
@@ -47,8 +47,8 @@ export function showWindowNameRide(ride: Ride) {
 					context.executeAction("ridesetname", rideSetNameArgs, (result) => {
 						console.log("RIDE IS RENAMED: ", result);
 					});
-                    windowShowNameRide.close()
-                    showWindowRide(ride);
+                    windowShowRide.title = 'Ride-Window ' + rideName;
+                    windowShowNameRide.close();
 				}
 			}
 		],

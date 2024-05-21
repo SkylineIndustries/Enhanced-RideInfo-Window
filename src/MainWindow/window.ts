@@ -4,13 +4,13 @@ import { ArgsRemoveRide } from "./ArgsRemoveRide";
 
 export { getNames, getRides, setNames, setRides, Rides } from "../RideListWindow/RideListWindow";
 import { openRideWindow } from "../RideWindow/RideWindowFunctions"
-import { reloadWindowShowRide, closeWindowShowRide } from "../RideWindow/RideWindow"
+import {reloadWindowShowRide, windowShowRide} from "../RideWindow/RideWindow"
 import {showWindowRenameGroup} from "./ShowWindowRenameGroup";
 import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
 import {showInfoWindow} from "../InfoWindow/ShowInfoWindow";
 
 const windowTag = "Enhanced-RideInfo-Window";
-let windowViewGroup: Window = ui.getWindow(windowTag);
+export let windowViewGroup: Window = ui.getWindow(windowTag);
 let windowChooseGroup: Window = ui.getWindow(windowTag);
 let emptyWindow: Window;
 let index: number = 0;
@@ -68,8 +68,10 @@ export function showWindowChooseGroup(): void {
                         showWindowError("No group to remove")
                         return;
                     }
-					names.splice(index);
-					rides.splice(index);
+					names.splice(index,1);
+					rides.splice(index,1);
+                    windowChooseGroup.close()
+                    showWindowChooseGroup()
 				},
 				image: 5165,
 			},
@@ -172,7 +174,7 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
     let listview: ListViewItem = ride;
 
 	let widget: WidgetDesc = {
-		name: "label" + height,
+		name: "ListViewAllRides",
 		type: "listview",
 		width: 300,
 		height: 600,
@@ -197,12 +199,13 @@ export function contextAction() {
 			for (const element of rides) {
                 for (let j = 0; j < element[1].length; j++) {
                     if (element[1][j].id === args.ride) {
-                        replaceNameInGroupWindow(element[1][j])
                         element[1][j].name = args.name;
-					}
+                    }
 				}
 			}
+            windowViewGroup.close()
 			reloadWindowShowRide();
+            showWindowViewGroup();
 		}
 		if (event.action == "ridedemolish") {
 			let args = event.args as ArgsRemoveRide;
@@ -220,13 +223,16 @@ export function contextAction() {
 							}
 						}
 					}
+                    if (element[1].length == 0) {
+                        windowViewGroup.close()
+                        return;
+                    }
 				}
 			}
-			closeWindowShowRide();
+            windowViewGroup.close();
+            windowShowRide.close();
+            showWindowViewGroup();
 		}
-        if (event.action == "ridesetappearance") {
-            console.log("Colour set: ", event.args);
-        }
         })
 }
 
@@ -239,11 +245,6 @@ export function setGroupName(index: number, name: string, oldName: string) {
         }
     }
 }
-
-function replaceNameInGroupWindow(ride: Ride) {
-	console.log(ride)
-}
-
 export function checkGroupName(name: string): boolean {
     for (const element of names) {
         if (element == name) {

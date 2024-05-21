@@ -1,6 +1,5 @@
-# THIS IS A MILESTONE VERSION OF THE ENHANCED RIDEINFO WINDOW
-- This Milestone version (CODENAME: ThrillTracker V0.0.3) is not the final version of the plugin
-- It uses the save and load functions of the plugin, it works but is not qauaranteed to not break your save, so use with caution!
+# ***This is Enhanced-RideInfo-Window version Thrilltracker (1.0.0)***
+DISCLAIMER: This is a full release, but there might still be some bugs in the code. If you find any bugs, please open a ticket on the GitHub page.
 
 # Enhanced-RideInfo-Window
 This plugin is a extension on the already existing RideWindow.
