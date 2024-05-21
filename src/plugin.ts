@@ -4,7 +4,7 @@ import { startup } from "./startup";
 
 registerPlugin({
 	name: "EnhancedWindow",
-	version: "0.0.0",
+	version: "1.0.0",
 	authors: ["SkylineIndustries"],
 	type: "remote",
 	licence: "MIT",

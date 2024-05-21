@@ -45,3 +45,9 @@ W
 img/Logo.txt,7\5\759c98abda2e1c87db438855e630d298422558c6
 P
  src/InfoWindow/ShowInfoWindow.ts,3\c\3cc657899a6358e7e7e70e642854ba5738f525b4
+L
+src/MainWindow/ArgsRemove.ts,1\b\1ba3d9d13dc1bbb7e7983bf1cf28fdb30c586df7
+P
+ src/MainWindow/ArgsRemoveRide.ts,e\1\e13f9fab39ca9d58e55e1fd8bb58a4dbb68c1c41
+N
+src/MainWindow/ArgsRideName.ts,5\8\5889f49bdcc1da53acc47388400ae573676bf6b8
