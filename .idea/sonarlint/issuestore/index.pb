@@ -51,3 +51,8 @@ P
  src/MainWindow/ArgsRemoveRide.ts,e\1\e13f9fab39ca9d58e55e1fd8bb58a4dbb68c1c41
 N
 src/MainWindow/ArgsRideName.ts,5\8\5889f49bdcc1da53acc47388400ae573676bf6b8
+7
+LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
+:
+
+LICENSE.md,4\a\4a8486805915245bbbe2e3c8c1a9d680c6843a82
