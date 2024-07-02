@@ -173,7 +173,7 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 
     let listview: ListViewItem = ride;
 
-	let widget: WidgetDesc = {
+	widgets.push( {
 		name: "ListViewAllRides",
 		type: "listview",
 		width: 300,
@@ -186,8 +186,24 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 		onClick: (item: number) => {
 			openRideWindow(ride1[item])
 		}
-	};
-	widgets.push(widget);
+	},
+        {
+            name: "groupStatus",
+            type: "dropdown",
+            width: 60,
+            height: 26,
+            x: 5,
+            y: 640,
+            tooltip: "Change status of all rides in this group",
+            items: ["Closed", "Open", "Testing"],
+            onChange: (id) => {
+                for (const element of ride1) {
+                    context.executeAction("ridesetstatus", {ride: element.id, status: id })
+                }
+            }
+        }
+        );
+
 	return widgets;
 }
 

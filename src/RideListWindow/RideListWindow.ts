@@ -106,7 +106,7 @@ export function createListviewWidget(): WidgetDesc[] {
 
 function getAllRideNames(): Ride[] {
     let nameRides: Ride[] = [];
-	map.rides.filter(r => r.classification === "ride").sort((a, b) => a.name.localeCompare(b.name)).map(r => nameRides.push(r));
+	map.rides.sort((a, b) => a.name.localeCompare(b.name)).map(r => nameRides.push(r));
 
     let nameOfRides: Ride[] = [];
 	for (const element of nameRides) {

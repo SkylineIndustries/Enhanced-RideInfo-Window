@@ -4,6 +4,7 @@ let saveData = context.getParkStorage();
 type RidesId = [string, number[]];
 
 export function startup() {
+    console.log("Successfully loaded Enhanced Ride Info Window: CODEBASE AdventureMaster");
 	if (typeof ui !== "undefined") {
 		ui.registerMenuItem("Enhanced-RideInfo-Window", () => showWindowChooseGroup());
         context.subscribe("map.save", () => {

@@ -6,13 +6,15 @@ import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";
 export let windowShowRide: Window = ui.getWindow(windowTag);
-let ridePrice: string = '0';
 let ride1: Ride;
+
+
+
 export function showWindowRide(ride: Ride) {
 	ride1 = ride;
 	let minWait: string = 'NOT AVAILABLE YET ';//String(ride1.minimumWaitingTime);
 	let maxWait: string = 'NOT AVAILABLE YET';//String(ride1.maximumWaitingTime);
-	ridePrice = ride1.price.toString()
+    let viewport : any[] = getAllVehiclesAndStations(ride1);
 	if (windowShowRide) {
 		windowShowRide.bringToFront();
 		return;
@@ -38,7 +40,7 @@ export function showWindowRide(ride: Ride) {
 				y: 60,
 				width: 550,
 				height: 20,
-				text: "Intensity: " + caclulateIEN(ride1.intensity).toFixed(2)
+				text: "Intensity: " + calculateIEN(ride1.intensity).toFixed(2)
 			},
 			{
 				type: 'label',
@@ -46,7 +48,7 @@ export function showWindowRide(ride: Ride) {
 				y: 80,
 				width: 550,
 				height: 20,
-				text: "Exciment: " + caclulateIEN(ride1.excitement).toFixed(2)
+				text: "Exciment: " + calculateIEN(ride1.excitement).toFixed(2)
 			},
 			{
 				type: 'label',
@@ -54,7 +56,7 @@ export function showWindowRide(ride: Ride) {
 				y: 100,
 				width: 550,
 				height: 20,
-				text: "Nausea: " + caclulateIEN(ride1.nausea).toFixed(2)
+				text: "Nausea: " + calculateIEN(ride1.nausea).toFixed(2)
 			},
             {
                 type: 'label',
@@ -132,9 +134,9 @@ export function showWindowRide(ride: Ride) {
 				y: 560,
 				width: 100,
 				height: 20,
-				text: ridePrice,
-				onIncrement: () => setRidePrice(ride1, "IN"),
-				onDecrement: () => setRidePrice(ride1, "DE")
+				text: calculatePrice(ride1.price[0]),
+				onIncrement: () => windowShowRide.findWidget<SpinnerWidget>('spinnerPrice').text = setRidePrice(ride1, "IN"),
+				onDecrement: () => windowShowRide.findWidget<SpinnerWidget>('spinnerPrice').text = setRidePrice(ride1, "DE")
 
 			},
 			{
@@ -153,8 +155,11 @@ export function showWindowRide(ride: Ride) {
 				y: 420,
 				width: 250,
 				height: 30,
-				items: ['NOT AVAILABLE YET']
-			},
+                items: viewport,
+                onChange: (viewportNumber) => {
+                    moveCamera(viewport[viewportNumber])
+                }
+                },
 			{
 				name: 'ButtonShowRideOpen',
 				type: 'button',
@@ -290,6 +295,19 @@ export function showWindowRide(ride: Ride) {
                 },
                 tooltip: 'Supports'
             },
+            {
+                name: 'GoToSelectedRide',
+                type: 'button',
+                x: 355,
+                y: 455,
+                width: 30,
+                height: 30,
+                image: 'search',
+                tooltip: 'Go to selected ride',
+                onClick: () => {
+                ui.mainViewport.moveTo(ride1.stations[0].entrance)
+                }
+            }
 		],
 		onClose() {
 			windowShowRide = emptyWindow;
@@ -298,22 +316,20 @@ export function showWindowRide(ride: Ride) {
 		},
 	}
 	windowShowRide = ui.openWindow(windowDesc);
-	moveCamera(ride1);
+	moveCamera(ride1.stations[0].entrance);
 	setOTCImage(ride1.status);
 
 }
 
-function moveCamera(ride: Ride) {
-	let station: RideStation = ride.stations[0];
-	if (station != null) {
-		windowShowRide.findWidget<ViewportWidget>('viewportShowRide').viewport.moveTo(station.entrance)
-	}
-	else {
-        console.log("No station found")
-	}
+function moveCamera(viewport: any) {
+    windowShowRide.findWidget<ViewportWidget>('viewportShowRide').viewport.moveTo(viewport)
 }
 
-function setRidePrice(ride: Ride, status: string) {
+export function setRidePrice(ride: Ride, status: string) : string {
+    if (!park.getFlag("freeParkEntry") && !park.getFlag("unlockAllPrices")){
+        console.log("I COME HERE");
+        return "0.00";
+    }
 	let price: number = ride.price[0];
 	if (status === 'IN' && price >=0 && price < 200) {
 		price++;
@@ -324,7 +340,7 @@ function setRidePrice(ride: Ride, status: string) {
     let priceDecimal: number = price / 10;
     let formattedPrice: string = priceDecimal.toFixed(2);
 	context.executeAction("ridesetprice", { ride: ride.id, price: price, isPrimaryPrice: true });
-    windowShowRide.findWidget<SpinnerWidget>('spinnerPrice').text = formattedPrice;
+    return formattedPrice;
 }
 
 function setOTCImage(status: string) {
@@ -357,6 +373,22 @@ export function reloadWindowShowRide() {
 	windowShowRide.title = "Ride-Window " + ride1.name;
 }
 
-function caclulateIEN(value: number) {
+function calculateIEN(value: number) {
     return value /100;
+}
+
+function getAllVehiclesAndStations(ride1: Ride) {
+    let viewport: any[] = [];
+    for (const element of ride1.stations) {
+        viewport.push(element.entrance);
+    }
+    for (const element of ride1.vehicles) {
+        viewport.push(element);
+    }
+    return viewport;
+}
+
+export function calculatePrice(price: number) {
+    let totalProfit: number = price /10;
+    return totalProfit.toFixed(2);
 }

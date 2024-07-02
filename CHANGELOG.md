@@ -79,7 +79,7 @@ New features will be added in the next release **version 1.0.0** and higher.
 - removed unused code
 
 
-## [RELEASE ThrillTracker V1.0.0] - 2024-07-26 ***FULL RELEASE***
+## [RELEASE ThrillTracker V1.0.0] - 2024-06-26 ***FULL RELEASE***
 ### Added
 - Added the ability to group rides
 - Added the ability to add rides to a group
@@ -106,5 +106,26 @@ New features will be added in the next release **version 1.0.0** and higher.
 - follow the ride in the Ride window
 - Pinpoint the ride on the map
 
+## [M1 AdventureMaster V1.1.0] - 2024-07-03
+### Added
+- Added the ability to set the status of all rides in a group. (open/closed/test)
+- Added the ability to add Stalls to the list of rides 
+- Added a new window for Stalls, these window will differ from the ride window as it will have different settings. And it does not have ratings' ect. 
+(This will be different for stalls that have a price that can be set or stalls that do not have that option) 
+- Added the ability to locate a ride on the map. This means that your camera will move to the ride. 
 
+### Changed
+- New codebase named AdventureMaster to reflect the new features. Based on the ThrillTracker codebase.
+- Changed the way a window is displayed when a ride is selected, this to make room for the new settings.
+- Setting the ride price will now work correctly with the pay-for-entry option. (This was a bug in the previous version)
 
+### Removed
+- No Removed changes planned for M1
+
+### Planned features for M2
+- Moving settings of a ride to a different tab in the ride window. This to make room for more settings and keep it organized.
+- Adding more settings to the ride window
+- Adding more settings to the group window
+- Seeing general information about the group. (like total profit, total visitors, etc)
+- Adding more settings to the stall window. (like removing the stall, renaming the stall, changing the color of a item of a stall if it allows it)
+- Fix a bug when you rotated the camera the ride would not be in the center of the screen. the viewport would not see the ride but landscape or the void.
