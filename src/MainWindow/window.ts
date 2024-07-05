@@ -8,6 +8,8 @@ import {reloadWindowShowRide, windowShowRide} from "../RideWindow/RideWindow"
 import {showWindowRenameGroup} from "./ShowWindowRenameGroup";
 import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
 import {showInfoWindow} from "../InfoWindow/ShowInfoWindow";
+import {closeWindowShowStall, reloadWindowShowStall} from "../RideWindow/StallWindow";
+import {ArgsRemove} from "./ArgsRemove";
 
 const windowTag = "Enhanced-RideInfo-Window";
 export let windowViewGroup: Window = ui.getWindow(windowTag);
@@ -173,7 +175,8 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 
     let listview: ListViewItem = ride;
 
-	widgets.push( {
+
+    widgets.push( {
 		name: "ListViewAllRides",
 		type: "listview",
 		width: 300,
@@ -201,7 +204,53 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
                     context.executeAction("ridesetstatus", {ride: element.id, status: id })
                 }
             }
-        }
+        },
+        {
+            name: "Total-customers",
+            type: 'label',
+            x: 100,
+            y: 640,
+            width: 550,
+            height: 10,
+            text: "Total customers: " + calculateCustomers(ride1)
+        },
+        {
+            name: "Total-profit",
+            type: 'label',
+            x: 100,
+            y: 660,
+            width: 550,
+            height: 10,
+            text: "Total profit: " + calculateTotalProfit(ride1)
+        },
+        {
+            name: "Total-running-cost",
+            type: 'label',
+            x: 100,
+            y: 680,
+            width: 550,
+            height: 10,
+            text: "Total running cost: " + caluclateTotalRunningCost(ride1)
+        },
+        {
+            name: "removeRidesInGroup",
+            type: "button",
+            width: 30,
+            height: 26,
+            x: 250,
+            y: 640,
+            image: 5165,
+            tooltip: "Remove all rides in this group",
+            onClick: () => {
+                for (const ride of ride1) {
+                let rideDemolishArgs: RideDemolishArgs = new ArgsRemove(ride.id, 0);
+                context.executeAction("ridedemolish", rideDemolishArgs, (result) => {
+                    closeWindowShowStall();
+                    console.log("RIDE IS REMOVED: ", result);
+                });
+                }
+            }
+        },
         );
 
 	return widgets;
@@ -209,6 +258,8 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 
 export function contextAction() {
 	context.subscribe("action.execute", (event) => {
+        if (event.action == "") {}
+
 		if (event.action == "ridesetname") {
 			let args = event.args as ArgsRideName;
 
@@ -220,6 +271,7 @@ export function contextAction() {
 				}
 			}
             windowViewGroup.close()
+            reloadWindowShowStall();
 			reloadWindowShowRide();
             showWindowViewGroup();
 		}
@@ -268,4 +320,31 @@ export function checkGroupName(name: string): boolean {
         }
     }
     return false;
+}
+
+
+function calculateCustomers(ride1: Ride[]) {
+    let totalCustomers: number = 0;
+    for (const element of ride1) {
+        totalCustomers += element.totalCustomers;
+    }
+    return totalCustomers;
+}
+
+function calculateTotalProfit(ride1: Ride[]) {
+    let totalProfit: number = 0;
+    for (const element of ride1) {
+        totalProfit += element.totalProfit;
+    }
+    totalProfit = totalProfit / 10;
+    return totalProfit.toFixed(2);
+}
+
+function caluclateTotalRunningCost(ride1: Ride[]) {
+    let totalRunningCost: number = 0;
+    for (const element of ride1) {
+        totalRunningCost += element.runningCost;
+    }
+    totalRunningCost = totalRunningCost / 10;
+    return totalRunningCost.toFixed(2);
 }

@@ -129,3 +129,23 @@ New features will be added in the next release **version 1.0.0** and higher.
 - Seeing general information about the group. (like total profit, total visitors, etc)
 - Adding more settings to the stall window. (like removing the stall, renaming the stall, changing the color of a item of a stall if it allows it)
 - Fix a bug when you rotated the camera the ride would not be in the center of the screen. the viewport would not see the ride but landscape or the void.
+
+## [M2 AdventureMaster V1.2.0] - TO BE ANNOUNCED
+### Added
+- Added more settings to the ride window (like wait time, etc)
+- Added more settings to the group window  (Like removing all rides that are in that group) 
+- seeing general information about the group. (like total profit, total visitors, etc) 
+- Added more settings to the stall window. (like removing the stall, renaming the stall) 
+- Added the ability to set which station you want to see. This means you can see/go to the selected station. (This does not include trains yet) ✓
+
+### Changed
+- Added more information to the ride window
+
+### Removed
+- No Removed changes planned for M2
+
+### Planned features for M3
+follow the trains in the viewport. This means that the camera will follow the train in the viewport.
+- set the colors of a train in the ride window.
+- set the colors of an item in a stall window. (if it allows it!)
+- set the colors of a train/track in the group window. (if it allows it!)

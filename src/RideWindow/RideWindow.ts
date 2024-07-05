@@ -2,19 +2,20 @@ import {ArgsRemove} from "../MainWindow/ArgsRemove";
 import {showWindowNameRide} from "./SetNameWindow"
 import {RideSetAppearanceArgs} from "./RideSetAppearanceArgs";
 import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
+import {ViewportArray} from "./ViewportArray";
 
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";
 export let windowShowRide: Window = ui.getWindow(windowTag);
 let ride1: Ride;
+let viewport: ViewportArray[] = [];
+let selectedStation: number = 0;
 
 
 
 export function showWindowRide(ride: Ride) {
 	ride1 = ride;
-	let minWait: string = 'NOT AVAILABLE YET ';//String(ride1.minimumWaitingTime);
-	let maxWait: string = 'NOT AVAILABLE YET';//String(ride1.maximumWaitingTime);
-    let viewport : any[] = getAllVehiclesAndStations(ride1);
+    viewport = getAllVehiclesAndStations(ride1);
 	if (windowShowRide) {
 		windowShowRide.bringToFront();
 		return;
@@ -82,6 +83,14 @@ export function showWindowRide(ride: Ride) {
                 height: 20,
                 text: "Downtime: " + ride1.downtime
             },
+            {
+                type: 'label',
+                x: 5,
+                y: 240,
+                width: 550,
+                height: 20,
+                text: "lift hill speed: " + ride1.liftHillSpeed
+            },
 			{
 				type: 'label',
 				name: 'test',
@@ -98,7 +107,25 @@ export function showWindowRide(ride: Ride) {
 				y: 520,
 				width: 100,
 				height: 20,
-				text: minWait
+				text: ride1.minimumWaitingTime.toString(),
+                onIncrement: () => {
+                    if (ride1.minimumWaitingTime >= 0 && ride1.minimumWaitingTime < 250) {
+                        let minWait: number = ride1.minimumWaitingTime + 1;
+                        windowShowRide.findWidget<SpinnerWidget>('spinnerMinimun').text = minWait.toString();
+                        ride1.minimumWaitingTime = ride1.minimumWaitingTime + 1;
+                    }
+                    if (ride1.maximumWaitingTime <= ride1.minimumWaitingTime) {
+                        ride1.maximumWaitingTime = ride1.minimumWaitingTime;
+                        windowShowRide.findWidget<SpinnerWidget>('spinnerMaximun').text = ride1.minimumWaitingTime.toString();
+                    }
+                },
+                onDecrement: () => {
+                    if (ride1.minimumWaitingTime > 0 && ride1.minimumWaitingTime <= 250) {
+                        let minWait: number = ride1.minimumWaitingTime - 1;
+                        windowShowRide.findWidget<SpinnerWidget>('spinnerMinimun').text = minWait.toString();
+                        ride1.minimumWaitingTime = ride1.minimumWaitingTime - 1;
+                    }
+                }
 			},
 			{
 				type: 'label',
@@ -116,7 +143,25 @@ export function showWindowRide(ride: Ride) {
 				y: 540,
 				width: 100,
 				height: 20,
-				text: maxWait
+				text: ride1.maximumWaitingTime.toString(),
+                onIncrement: () => {
+                    if (ride1.maximumWaitingTime >= 0 && ride1.maximumWaitingTime < 250) {
+                        let maxWait: number = ride1.maximumWaitingTime + 1;
+                        windowShowRide.findWidget<SpinnerWidget>('spinnerMaximun').text = maxWait.toString();
+                        ride1.maximumWaitingTime = ride1.maximumWaitingTime + 1;
+                    }
+                },
+                onDecrement: () => {
+                    if (ride1.maximumWaitingTime > 0 && ride1.maximumWaitingTime <= 250) {
+                        let maxWait: number = ride1.maximumWaitingTime - 1;
+                        windowShowRide.findWidget<SpinnerWidget>('spinnerMaximun').text = maxWait.toString();
+                        ride1.maximumWaitingTime = ride1.maximumWaitingTime - 1;
+                    }
+                    if (ride1.maximumWaitingTime <= ride1.minimumWaitingTime) {
+                        ride1.minimumWaitingTime = ride1.maximumWaitingTime;
+                        windowShowRide.findWidget<SpinnerWidget>('spinnerMinimun').text = ride1.maximumWaitingTime.toString();
+                    }
+                }
 			},
 			{
 				type: 'label',
@@ -151,12 +196,14 @@ export function showWindowRide(ride: Ride) {
 			{
 				name: 'dropdownShowRide',
 				type: 'dropdown',
+                selectedIndex: 0,
 				x: 120,
 				y: 420,
 				width: 250,
 				height: 30,
-                items: viewport,
+                items: getStationNames(),
                 onChange: (viewportNumber) => {
+                    selectedStation = viewportNumber;
                     moveCamera(viewport[viewportNumber])
                 }
                 },
@@ -305,8 +352,35 @@ export function showWindowRide(ride: Ride) {
                 image: 'search',
                 tooltip: 'Go to selected ride',
                 onClick: () => {
-                ui.mainViewport.moveTo(ride1.stations[0].entrance)
+                ui.mainViewport.moveTo(ride1.stations[selectedStation].start)
                 }
+            },
+            {
+                name: 'TotalGuests',
+                type: 'label',
+                x: 5,
+                y: 180,
+                width: 550,
+                height: 10,
+                text: "Total customers: " + ride1.totalCustomers
+            },
+            {
+                name: 'TotalProfit',
+                type: 'label',
+                x: 5,
+                y: 200,
+                width: 550,
+                height: 10,
+                text: "Total profit: " + calculatePrice(ride1.totalProfit)
+            },
+            {
+                name: 'RunningCost',
+                type: 'label',
+                x: 5,
+                y: 220,
+                width: 550,
+                height: 10,
+                text: "Running cost: " + calculatePrice(ride1.runningCost)
             }
 		],
 		onClose() {
@@ -316,18 +390,16 @@ export function showWindowRide(ride: Ride) {
 		},
 	}
 	windowShowRide = ui.openWindow(windowDesc);
-	moveCamera(ride1.stations[0].entrance);
+	moveCamera(new ViewportArray(ride1.stations[0].start, "Station 1"));
 	setOTCImage(ride1.status);
-
 }
 
-function moveCamera(viewport: any) {
-    windowShowRide.findWidget<ViewportWidget>('viewportShowRide').viewport.moveTo(viewport)
+function moveCamera(viewport: ViewportArray) {
+    windowShowRide.findWidget<ViewportWidget>('viewportShowRide').viewport.moveTo(viewport.coordsXYZ)
 }
 
 export function setRidePrice(ride: Ride, status: string) : string {
     if (!park.getFlag("freeParkEntry") && !park.getFlag("unlockAllPrices")){
-        console.log("I COME HERE");
         return "0.00";
     }
 	let price: number = ride.price[0];
@@ -378,12 +450,14 @@ function calculateIEN(value: number) {
 }
 
 function getAllVehiclesAndStations(ride1: Ride) {
-    let viewport: any[] = [];
+    viewport = [];
+    let  id: number = 1;
     for (const element of ride1.stations) {
-        viewport.push(element.entrance);
-    }
-    for (const element of ride1.vehicles) {
-        viewport.push(element);
+        if (element.start != null){
+            let viewportObject: ViewportArray = new ViewportArray(element.start, "Station " + id);
+            viewport.push(viewportObject);
+            id++;
+        }
     }
     return viewport;
 }
@@ -391,4 +465,12 @@ function getAllVehiclesAndStations(ride1: Ride) {
 export function calculatePrice(price: number) {
     let totalProfit: number = price /10;
     return totalProfit.toFixed(2);
+}
+
+function getStationNames() {
+    let stationNames: string[] = [];
+   for(const element of viewport) {
+       stationNames.push(element.stationName);
+    }
+    return stationNames;
 }

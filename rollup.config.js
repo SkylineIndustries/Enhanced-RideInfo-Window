@@ -11,7 +11,7 @@ const options =
 	/**
 	 * Change the file name of the output file here.
 	 */
-	filename: "Enhanced-RideInfo-Window-V1.1.0-AdventureMaster-M1-GUEST-EDITION.js",
+	filename: "Enhanced-RideInfo-Window-V2.0.0-AdventureMaster-M1-GUEST-EDITION.js",
 
 	/**
 	 * Determines in what build mode the plugin should be build. The default here takes

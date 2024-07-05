@@ -1,11 +1,13 @@
+import {showWindowNameRide} from "./SetNameWindow";
+import {ArgsRemove} from "../MainWindow/ArgsRemove";
 
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";
 export let windowShowStall: Window = ui.getWindow(windowTag);
-
+let stall1: Ride;
 
 export function showWindowStall(stall: Ride) {
-
+    stall1 = stall;
     if (windowShowStall) {
         windowShowStall.bringToFront();
         return;
@@ -159,7 +161,35 @@ function createStandardWidgets(stall: Ride): WidgetDesc[] {
             onClick: () => {
                 ui.mainViewport.moveTo(stall.stations[0].start)
             }
-        }
+        },
+        {
+            name: 'ButtonShowRideName',
+            type: 'button',
+            x: 80,
+            y: 430,
+            width: 30,
+            height: 30,
+            image: 'copy',
+            onClick: () => {
+                showWindowNameRide(stall);
+            }
+        },
+        {
+            name: 'ButtonDeleteRide',
+            type: 'button',
+            x: 50,
+            y: 430,
+            width: 30,
+            height: 30,
+            image: 5165,
+            onClick: () => {
+                let rideDemolishArgs: RideDemolishArgs = new ArgsRemove(stall.id, 0);
+                context.executeAction("ridedemolish", rideDemolishArgs, (result) => {
+                    closeWindowShowStall();
+                    console.log("RIDE IS REMOVED: ", result);
+                });
+            }
+        },
     )
     return standardWidgets;
 }
@@ -181,4 +211,12 @@ function createStandardWidgets(stall: Ride): WidgetDesc[] {
 function calculatePrice(price: number) {
     let totalProfit: number = price /10;
     return totalProfit.toFixed(2);
+}
+
+export function closeWindowShowStall() {
+    windowShowStall.close();
+}
+
+export function reloadWindowShowStall() {
+    windowShowStall.title = "Ride-Window " + stall1.name;
 }

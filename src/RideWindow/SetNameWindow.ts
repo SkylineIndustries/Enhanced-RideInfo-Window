@@ -1,6 +1,7 @@
 import {ArgsName} from "../MainWindow/ArgsName";
 import { windowShowRide} from "./RideWindow";
 import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
+import {windowShowStall} from "./StallWindow";
 
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";
@@ -47,7 +48,12 @@ export function showWindowNameRide(ride: Ride) {
 					context.executeAction("ridesetname", rideSetNameArgs, (result) => {
 						console.log("RIDE IS RENAMED: ", result);
 					});
-                    windowShowRide.title = 'Ride-Window ' + rideName;
+                    if (windowShowRide) {
+                        windowShowRide.title = 'Ride-Window ' + rideName;
+                    }
+                    if (windowShowStall){
+                        windowShowStall.title = 'Stall-Window ' + rideName;
+                    }
                     windowShowNameRide.close();
 				}
 			}
