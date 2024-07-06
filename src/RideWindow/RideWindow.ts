@@ -7,11 +7,10 @@ import {ViewportArray} from "./ViewportArray";
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";
 export let windowShowRide: Window = ui.getWindow(windowTag);
-let ride1: Ride;
+export let ride1: Ride;
 let viewport: ViewportArray[] = [];
 let selectedStation: number = 0;
-
-
+let updateViewport: (IDisposable | null) = null;
 
 export function showWindowRide(ride: Ride) {
 	ride1 = ride;
@@ -22,7 +21,7 @@ export function showWindowRide(ride: Ride) {
 	}
 	const windowDesc: WindowDesc = {
 		classification: windowTag,
-		width: 400,
+		width: 475,
 		height: 600,
 		title: 'Ride-Window ' + ride1.name,
 		colours: [0o32, 0o30],
@@ -85,6 +84,7 @@ export function showWindowRide(ride: Ride) {
             },
             {
                 type: 'label',
+                name: 'lifthill',
                 x: 5,
                 y: 240,
                 width: 550,
@@ -203,8 +203,7 @@ export function showWindowRide(ride: Ride) {
 				height: 30,
                 items: getStationNames(),
                 onChange: (viewportNumber) => {
-                    selectedStation = viewportNumber;
-                    moveCamera(viewport[viewportNumber])
+                    moveCamera(viewportNumber)
                 }
                 },
 			{
@@ -251,8 +250,8 @@ export function showWindowRide(ride: Ride) {
 			{
 				name: 'ButtonShowRideName',
 				type: 'button',
-				x: 240,
-				y: 455,
+				x: 120,
+				y: 490,
 				width: 30,
 				height: 30,
 				image: 'copy',
@@ -263,8 +262,8 @@ export function showWindowRide(ride: Ride) {
 			{
 				name: 'ButtonDeleteRide',
 				type: 'button',
-				x: 260,
-				y: 455,
+				x: 160,
+				y: 490,
 				width: 30,
 				height: 30,
 				image: 5165,
@@ -277,10 +276,19 @@ export function showWindowRide(ride: Ride) {
 				}
 			},
             {
+                name: 'LabelColorSettings',
+                type: 'label',
+                x: 310,
+                y: 530,
+                width: 550,
+                height: 20,
+                text: "<-- Track color settings"
+            },
+            {
                 name: 'ColorPickerTrack1',
                 type: 'colourpicker',
-                x: 300,
-                y: 455,
+                x: 250,
+                y: 530,
                 width: 10,
                 height: 10,
                 colour: ride.colourSchemes[0].main,
@@ -301,8 +309,8 @@ export function showWindowRide(ride: Ride) {
             {
                 name: 'ColorPickerTrack2',
                 type: 'colourpicker',
-                x: 320,
-                y: 455,
+                x: 270,
+                y: 530,
                 width: 10,
                 height: 10,
                 colour: ride.colourSchemes[0].additional,
@@ -323,14 +331,89 @@ export function showWindowRide(ride: Ride) {
             {
                 name: 'ColorPickerTrack3',
                 type: 'colourpicker',
-                x: 340,
-                y: 455,
+                x: 290,
+                y: 530,
                 width: 10,
                 height: 10,
                 colour: ride.colourSchemes[0].supports,
                 onChange: (colour) => {
                     try {
-                        let args: RideSetAppearanceArgs = new RideSetAppearanceArgs(ride.id, 0, colour, 2, 0);
+                        let args: RideSetAppearanceArgs = new RideSetAppearanceArgs(ride.id, 2, colour, 0, 0);
+                        context.executeAction("ridesetappearance", args, result => {
+                            console.log(result)
+                        })
+                    }
+                    catch (e) {
+                        showWindowError("Error setting colour, please try again.")
+                        return
+                    }
+                },
+                tooltip: 'Supports'
+            },
+            {
+                name: 'LabelVehicleColorSettings',
+                type: 'label',
+                x: 310,
+                y: 550,
+                width: 550,
+                height: 20,
+                text: "<-- Vehicle color settings"
+            },
+            {
+                name: 'ColorPickerVehicle1',
+                type: 'colourpicker',
+                x: 250,
+                y: 550,
+                width: 10,
+                height: 10,
+                colour: ride.vehicleColours[0].body,
+                tooltip: 'Main',
+                onChange: (colour) => {
+                    try {
+                        let args: RideSetAppearanceArgs = new RideSetAppearanceArgs(ride.id, 3, colour, 0, 0);
+                        context.executeAction("ridesetappearance", args, result => {
+                            console.log(result)
+                        })
+                    }
+                    catch (e) {
+                        showWindowError("Error setting colour, please try again.")
+                        return
+                    }
+                }
+            },
+            {
+                name: 'ColorPickerVehicle2',
+                type: 'colourpicker',
+                x: 270,
+                y: 550,
+                width: 10,
+                height: 10,
+                colour: ride.vehicleColours[0].trim,
+                tooltip: 'Additional',
+                onChange: (colour) => {
+                    try {
+                        let args: RideSetAppearanceArgs = new RideSetAppearanceArgs(ride.id, 4, colour, 0, 0);
+                        context.executeAction("ridesetappearance", args, result => {
+                            console.log(result)
+                        })
+                    }
+                    catch (e) {
+                        showWindowError("Error setting colour, please try again.")
+                        return
+                    }
+                },
+            },
+            {
+                name: 'ColorPickerVehicle3',
+                type: 'colourpicker',
+                x: 290,
+                y: 550,
+                width: 10,
+                height: 10,
+                colour: ride.vehicleColours[0].tertiary,
+                onChange: (colour) => {
+                    try {
+                        let args: RideSetAppearanceArgs = new RideSetAppearanceArgs(ride.id, 5, colour, 0, 0);
                         context.executeAction("ridesetappearance", args, result => {
                             console.log(result)
                         })
@@ -345,8 +428,8 @@ export function showWindowRide(ride: Ride) {
             {
                 name: 'GoToSelectedRide',
                 type: 'button',
-                x: 355,
-                y: 455,
+                x: 200,
+                y: 490,
                 width: 30,
                 height: 30,
                 image: 'search',
@@ -384,18 +467,28 @@ export function showWindowRide(ride: Ride) {
             }
 		],
 		onClose() {
-			windowShowRide = emptyWindow;
-
-			ui.tool?.cancel()
+            if (updateViewport != null) {
+                disableUpdateViewport();
+            }
+            windowShowRide = emptyWindow;
+            ui.tool?.cancel()
 		},
 	}
 	windowShowRide = ui.openWindow(windowDesc);
-	moveCamera(new ViewportArray(ride1.stations[0].start, "Station 1"));
-	setOTCImage(ride1.status);
+    windowShowRide.findWidget<ViewportWidget>('viewportShowRide').viewport.moveTo(ride1.stations[0].start)
+    setOTCImage(ride1.status);
 }
 
-function moveCamera(viewport: ViewportArray) {
-    windowShowRide.findWidget<ViewportWidget>('viewportShowRide').viewport.moveTo(viewport.coordsXYZ)
+function moveCamera(viewportNumber: number) {
+    if (updateViewport != null) {
+        disableUpdateViewport();
+    }
+    if (viewport[viewportNumber].stationName.includes("Vehicle")) {
+        followTrain(viewportNumber);
+    }
+    else {
+        windowShowRide.findWidget<ViewportWidget>('viewportShowRide').viewport.moveTo(viewport[viewportNumber].coordsXYZ)
+    }
 }
 
 export function setRidePrice(ride: Ride, status: string) : string {
@@ -415,7 +508,7 @@ export function setRidePrice(ride: Ride, status: string) : string {
     return formattedPrice;
 }
 
-function setOTCImage(status: string) {
+export function setOTCImage(status: string) {
 	switch (status) {
 		case "open":
 			windowShowRide.findWidget<ButtonWidget>('ButtonShowRideTest').image = 'rct1_test_off';
@@ -459,6 +552,20 @@ function getAllVehiclesAndStations(ride1: Ride) {
             id++;
         }
     }
+    id = 1;
+    for (const element of ride1.vehicles) {
+        let vehicle: CoordsXYZ = {
+            x: map.getEntity(element).x,
+            y: map.getEntity(element).y,
+            z: map.getEntity(element).z
+        }
+        if (element != null) {
+            let viewportObject: ViewportArray = new ViewportArray(vehicle, "Vehicle " + id);
+            viewportObject.setVehicleNumber(element);
+            viewport.push(viewportObject);
+            id++;
+        }
+    }
     return viewport;
 }
 
@@ -473,4 +580,21 @@ function getStationNames() {
        stationNames.push(element.stationName);
     }
     return stationNames;
+}
+
+function followTrain(viewportNumber: number) {
+     updateViewport = context.subscribe("interval.tick",() => {
+         let element: number = viewport[viewportNumber].getVehicleNumber();
+         let vehicle: CoordsXYZ = {
+             x: map.getEntity(element).x,
+             y: map.getEntity(element).y,
+             z: map.getEntity(element).z
+         }
+         windowShowRide.findWidget<ViewportWidget>('viewportShowRide').viewport.moveTo(vehicle)
+     })
+}
+
+function disableUpdateViewport(){
+    updateViewport?.dispose();
+    updateViewport = null;
 }

@@ -1,5 +1,6 @@
 import {showWindowNameRide} from "./SetNameWindow";
 import {ArgsRemove} from "../MainWindow/ArgsRemove";
+import {RideSetAppearanceArgs} from "./RideSetAppearanceArgs";
 
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";
@@ -19,7 +20,7 @@ export function showWindowStall(stall: Ride) {
         height: 460,
         title: 'Stall-Window ' + stall.name,
         colours: [0o32, 0o30],
-        widgets: createStandardWidgets(stall).concat(setPriceWidgets(stall)),
+        widgets: createStandardWidgets(stall).concat(setPriceWidgets(stall)).concat(setColorWidgets(stall)),
         onClose() {
             windowShowStall = emptyWindow;
 
@@ -28,14 +29,14 @@ export function showWindowStall(stall: Ride) {
     }
     windowShowStall = ui.openWindow(windowDesc);
     moveCamera(stall.stations[0].start);
-    setOTCImage(stall.status);
+    setOTCImageStall(stall.status);
 }
 
 function moveCamera(viewport: any) {
     windowShowStall.findWidget<ViewportWidget>('viewportShowRide').viewport.moveTo(viewport)
 }
 
-function setOTCImage(status: string) {
+export function setOTCImageStall(status: string) {
     switch (status) {
         case "open":
             windowShowStall.findWidget<ButtonWidget>('ButtonShowStallOpen').image = 'rct1_open_on';
@@ -49,6 +50,26 @@ function setOTCImage(status: string) {
     }
 }
 
+function setColorWidgets(stall: Ride): WidgetDesc[] {
+    let colorWidget: WidgetDesc[] = []
+        colorWidget.push(
+            {
+                name: 'color',
+                type: 'colourpicker',
+                x: 5,
+                y: 160,
+                width: 100,
+                height: 20,
+                colour: stall.colourSchemes[0].main,
+                tooltip: 'Change the colour of the ride (DOES NOTHING WHEN RIDE HOES NO ITEM TO CHANGE COLOUR OF)',
+                onChange: (colour) => {
+                    let args: RideSetAppearanceArgs = new RideSetAppearanceArgs(stall.id, 0, colour, 0, 0);
+                    context.executeAction("ridesetappearance", args);
+                }
+            }
+        )
+        return colorWidget;
+}
 function setPriceWidgets(stall: Ride): WidgetDesc[] {
 
     if(stall.price[0] != null){
@@ -124,7 +145,7 @@ function createStandardWidgets(stall: Ride): WidgetDesc[] {
         image: 'rct1_open_off',
         onClick: () => {
         context.executeAction("ridesetstatus", { ride: stall.id, status: 1 })
-        setOTCImage('open')
+        setOTCImageStall('open')
     }
     },
             {
@@ -137,7 +158,7 @@ function createStandardWidgets(stall: Ride): WidgetDesc[] {
         image: 'rct1_close_off',
         onClick: () => {
         context.executeAction("ridesetstatus", { ride: stall.id, status: 0 })
-        setOTCImage('closed')
+        setOTCImageStall('closed')
     }
     },
         {

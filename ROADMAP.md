@@ -75,9 +75,16 @@ This version is the first version of the AdventureMaster Builds which belongs to
 This version is not intended for the public and is only for testing purposes.
 This version is not guaranteed to work and may contain bugs.
 
-## [M2 AdventureMaster V1.2.0] - TO BE ANNOUNCED
+## [M2 AdventureMaster V1.2.0] - 2024-07-06
 This is a milestone build of the enhanced ride window.
 This version is the second version of the AdventureMaster Builds which belongs to the planned V2.0.0 release family.
+**THIS VERSION WILL NOT BE MADE PUBLIC**
+This version is not intended for the public and is only for testing purposes.
+This version is not guaranteed to work and may contain bugs.
+
+## [M3 AdventureMaster V1.3.0] - 2024-07-07
+This is a milestone build of the enhanced ride window.
+This version is the third version of the AdventureMaster Builds which belongs to the planned V2.0.0 release family.
 **THIS VERSION WILL NOT BE MADE PUBLIC**
 This version is not intended for the public and is only for testing purposes.
 This version is not guaranteed to work and may contain bugs.

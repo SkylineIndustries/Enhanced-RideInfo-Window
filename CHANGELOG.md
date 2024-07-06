@@ -130,13 +130,13 @@ New features will be added in the next release **version 1.0.0** and higher.
 - Adding more settings to the stall window. (like removing the stall, renaming the stall, changing the color of a item of a stall if it allows it)
 - Fix a bug when you rotated the camera the ride would not be in the center of the screen. the viewport would not see the ride but landscape or the void.
 
-## [M2 AdventureMaster V1.2.0] - TO BE ANNOUNCED
+## [M2 AdventureMaster V1.2.0] - 2024-07-06
 ### Added
 - Added more settings to the ride window (like wait time, etc)
 - Added more settings to the group window  (Like removing all rides that are in that group) 
 - seeing general information about the group. (like total profit, total visitors, etc) 
 - Added more settings to the stall window. (like removing the stall, renaming the stall) 
-- Added the ability to set which station you want to see. This means you can see/go to the selected station. (This does not include trains yet) ✓
+- Added the ability to set which station you want to see. This means you can see/go to the selected station. (This does not include trains yet)
 
 ### Changed
 - Added more information to the ride window
@@ -149,3 +149,21 @@ follow the trains in the viewport. This means that the camera will follow the tr
 - set the colors of a train in the ride window.
 - set the colors of an item in a stall window. (if it allows it!)
 - set the colors of a train/track in the group window. (if it allows it!)
+
+## [M3 AdventureMaster V1.3.0] - 2024-07-07
+### Added
+- Added the ability to follow the trains in the viewport. This means that the camera will follow the train in the viewport. 
+- Added the ability to set the colors of a train in the ride window.
+- Added the ability to set the colors of an item in a stall window. (if it allows it!)
+
+### Changed
+- Changed the code so when a setting is changed in the original window the window will be updated. (This was a bug in the previous versions)
+
+### Removed
+- No Removed changes planned for M3
+
+### Planned changes for BETA 1
+**NO** new features will be added in this release. Only bugfixes and improvements.
+New features will be added in the next release **version 3.0.0** and higher.
+Only bugfixes and improvements will be made in this release.
+**THIS RELEASE WILL BE DOWNLOADABLE FROM GITHUB FOR GUEST TO USE**

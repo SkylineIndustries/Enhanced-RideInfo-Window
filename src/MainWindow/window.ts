@@ -1,15 +1,16 @@
-import {rides, names, showWindowAddNewGroup, createListviewWidget,} from "../RideListWindow/RideListWindow";
-import { ArgsRideName } from "./ArgsRideName";
-import { ArgsRemoveRide } from "./ArgsRemoveRide";
-
-export { getNames, getRides, setNames, setRides, Rides } from "../RideListWindow/RideListWindow";
-import { openRideWindow } from "../RideWindow/RideWindowFunctions"
-import {reloadWindowShowRide, windowShowRide} from "../RideWindow/RideWindow"
+import {createListviewWidget, names, rides, showWindowAddNewGroup,} from "../RideListWindow/RideListWindow";
+import {ArgsRideName} from "./ArgsRideName";
+import {ArgsRemoveRide} from "./ArgsRemoveRide";
+import {openRideWindow} from "../RideWindow/RideWindowFunctions"
+import {reloadWindowShowRide, ride1, setOTCImage, windowShowRide} from "../RideWindow/RideWindow"
 import {showWindowRenameGroup} from "./ShowWindowRenameGroup";
 import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
 import {showInfoWindow} from "../InfoWindow/ShowInfoWindow";
-import {closeWindowShowStall, reloadWindowShowStall} from "../RideWindow/StallWindow";
+import {closeWindowShowStall, reloadWindowShowStall, windowShowStall} from "../RideWindow/StallWindow";
 import {ArgsRemove} from "./ArgsRemove";
+import {RideSetAppearanceArgs} from "../RideWindow/RideSetAppearanceArgs";
+import {setOTCImageStall} from "../RideWindow/StallWindow";
+export { getNames, getRides, setNames, setRides, Rides } from "../RideListWindow/RideListWindow";
 
 const windowTag = "Enhanced-RideInfo-Window";
 export let windowViewGroup: Window = ui.getWindow(windowTag);
@@ -259,7 +260,6 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 export function contextAction() {
 	context.subscribe("action.execute", (event) => {
         if (event.action == "") {}
-
 		if (event.action == "ridesetname") {
 			let args = event.args as ArgsRideName;
 
@@ -275,6 +275,95 @@ export function contextAction() {
 			reloadWindowShowRide();
             showWindowViewGroup();
 		}
+        if (event.action == "ridesetsetting") {
+            let args = event.args as ArgsSetting;
+            if (windowShowRide) {
+                if (args.setting == 2) {
+                    windowShowRide.findWidget<SpinnerWidget>('spinnerMinimun').text = args.value.toString();
+                    if (ride1.maximumWaitingTime <= ride1.minimumWaitingTime) {
+                        windowShowRide.findWidget<SpinnerWidget>('spinnerMaximun').text = args.value.toString();
+                    }
+                }
+
+                if (args.setting == 3) {
+                    windowShowRide.findWidget<SpinnerWidget>('spinnerMaximun').text = args.value.toString();
+                    if (ride1.maximumWaitingTime <= ride1.minimumWaitingTime) {
+                        windowShowRide.findWidget<SpinnerWidget>('spinnerMinimun').text = args.value.toString();
+                    }
+                }
+                if (args.setting == 4) {
+                    windowShowRide.findWidget<SpinnerWidget>('spinnerPrice').text = args.value.toString();
+
+                }
+                if (args.setting == 8) {
+                    windowShowRide.findWidget<LabelWidget>('lifthill').text = args.value.toString();
+                }
+            }
+        }
+        if (event.action == "ridesetprice") {
+            if (windowShowStall) {
+                let args = event.args as ArgsPrice;
+                let priceDecimal: number = args.price / 10;
+                windowShowStall.findWidget<SpinnerWidget>('spinnerPrice').text = priceDecimal.toFixed(2);
+            }
+            if (windowShowRide) {
+                let args = event.args as ArgsPrice;
+                let priceDecimal: number = args.price / 10;
+                windowShowRide.findWidget<SpinnerWidget>('spinnerPrice').text = priceDecimal.toFixed(2);
+            }
+        }
+        if (event.action == "ridesetstatus") {
+            if (windowShowStall) {
+                let args = event.args as ArgsStatus;
+                if (args.status == 1) {
+                    setOTCImageStall("open");
+                }
+                if (args.status == 0) {
+                    setOTCImageStall("closed");
+                }
+            }
+            if (windowShowRide) {
+                let args = event.args as ArgsStatus;
+                if (args.status == 1) {
+                    setOTCImage("open");
+                }
+                if (args.status == 0) {
+                    setOTCImage("closed");
+                }
+                if (args.status == 2) {
+                    setOTCImage("test");
+                }
+            }
+        }
+        if (event.action == "ridesetappearance") {
+            if (windowShowStall){
+                let args = event.args as RideSetAppearanceArgs;
+                if (args.type == 0){
+                    windowShowStall.findWidget<ColourPickerWidget>('color').colour = args.value;
+                }
+            }
+            if (windowShowRide) {
+                let args = event.args as RideSetAppearanceArgs;
+                if (args.type == 0) {
+                    windowShowRide.findWidget<ColourPickerWidget>('ColorPickerTrack1').colour =args.value;
+                }
+                if (args.type == 1){
+                    windowShowRide.findWidget<ColourPickerWidget>('ColorPickerTrack2').colour =args.value;
+                }
+                if (args.type == 2){
+                    windowShowRide.findWidget<ColourPickerWidget>('ColorPickerTrack3').colour =args.value;
+                }
+                if (args.type == 3){
+                    windowShowRide.findWidget<ColourPickerWidget>('ColorPickerVehicle1').colour =args.value;
+                }
+                if (args.type == 4){
+                    windowShowRide.findWidget<ColourPickerWidget>('ColorPickerVehicle2').colour =args.value;
+                }
+                if (args.type == 5){
+                    windowShowRide.findWidget<ColourPickerWidget>('ColorPickerVehicle3').colour =args.value;
+                }
+            }
+        }
 		if (event.action == "ridedemolish") {
 			let args = event.args as ArgsRemoveRide;
 
