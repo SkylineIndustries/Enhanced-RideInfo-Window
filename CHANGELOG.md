@@ -145,7 +145,7 @@ New features will be added in the next release **version 1.0.0** and higher.
 - No Removed changes planned for M2
 
 ### Planned features for M3
-follow the trains in the viewport. This means that the camera will follow the train in the viewport.
+-follow the trains in the viewport. This means that the camera will follow the train in the viewport.
 - set the colors of a train in the ride window.
 - set the colors of an item in a stall window. (if it allows it!)
 - set the colors of a train/track in the group window. (if it allows it!)
@@ -155,6 +155,7 @@ follow the trains in the viewport. This means that the camera will follow the tr
 - Added the ability to follow the trains in the viewport. This means that the camera will follow the train in the viewport. 
 - Added the ability to set the colors of a train in the ride window.
 - Added the ability to set the colors of an item in a stall window. (if it allows it!)
+- Added the ability to set the maintenanceInterval of a ride in the ride window.
 
 ### Changed
 - Changed the code so when a setting is changed in the original window the window will be updated. (This was a bug in the previous versions)

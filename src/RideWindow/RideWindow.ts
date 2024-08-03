@@ -12,6 +12,8 @@ let viewport: ViewportArray[] = [];
 let selectedStation: number = 0;
 let updateViewport: (IDisposable | null) = null;
 
+
+
 export function showWindowRide(ride: Ride) {
 	ride1 = ride;
     viewport = getAllVehiclesAndStations(ride1);
@@ -22,7 +24,7 @@ export function showWindowRide(ride: Ride) {
 	const windowDesc: WindowDesc = {
 		classification: windowTag,
 		width: 475,
-		height: 600,
+		height: 720,
 		title: 'Ride-Window ' + ride1.name,
 		colours: [0o32, 0o30],
 		widgets: [
@@ -464,6 +466,28 @@ export function showWindowRide(ride: Ride) {
                 width: 550,
                 height: 10,
                 text: "Running cost: " + calculatePrice(ride1.runningCost)
+            },
+            {
+                name: 'MaintenanceIntervalLabel',
+                type: 'label',
+                x: 5,
+                y: 580,
+                width: 550,
+                height: 20,
+                text: "Maintenance interval: "
+            },
+            {
+                name: 'MaintenanceInterval',
+                type: 'dropdown',
+                x: 140,
+                y: 580,
+                width: 150,
+                height: 20,
+                items: ["Every 10 minutes", "Every 20 minutes", "Every 30 minutes", "Every 45 minutes", "Every hour", "Every 2 hours", "Never"],
+                selectedIndex: ride1.inspectionInterval,
+                onChange: (index) => {
+                    ride1.inspectionInterval = index;
+                }
             }
 		],
 		onClose() {

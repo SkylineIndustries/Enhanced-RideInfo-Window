@@ -259,7 +259,6 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
 
 export function contextAction() {
 	context.subscribe("action.execute", (event) => {
-        if (event.action == "") {}
 		if (event.action == "ridesetname") {
 			let args = event.args as ArgsRideName;
 
@@ -293,7 +292,9 @@ export function contextAction() {
                 }
                 if (args.setting == 4) {
                     windowShowRide.findWidget<SpinnerWidget>('spinnerPrice').text = args.value.toString();
-
+                }
+                if (args.setting == 5) {
+                    windowShowRide.findWidget<SpinnerWidget>('maintenanceInterval').text = args.value.toString();
                 }
                 if (args.setting == 8) {
                     windowShowRide.findWidget<LabelWidget>('lifthill').text = args.value.toString();

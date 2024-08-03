@@ -18,7 +18,7 @@ It is recommended to always use the latest version of the codebase of the enhanc
 
 These releases are not yet available to the public. These releases are planned and are being worked on. These releases will be released in the future.
 
-## ## [RELEASE AdventureMaster V2.0.0 GUEST EDITION] - TO BE ANNOUNCED
+## ## [RELEASE AdventureMaster V2.0.0 GUEST EDITION] - 2024-03-08
 This version is currently being worked on. It will be released in the future.
 This version will contain new features and improvements to the enhanced ride window.
 This version will be released when it is ready for the public.
