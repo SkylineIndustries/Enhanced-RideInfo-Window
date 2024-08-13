@@ -4,7 +4,7 @@ import { startup } from "./startup";
 
 registerPlugin({
 	name: "EnhancedWindow",
-	version: "2.0.0",
+	version: "3.0.0",
 	authors: ["SkylineIndustries"],
 	type: "remote",
 	licence: "MIT",
@@ -14,6 +14,6 @@ registerPlugin({
 	 * version. Version 70 equals the v0.4.4 release.
 	 * @see https://github.com/OpenRCT2/OpenRCT2/blob/v0.4.4/src/openrct2/scripting/ScriptEngine.h#L50
 	 */
-	targetApiVersion: 70,
+	targetApiVersion: 98,
 	main: startup,
 });

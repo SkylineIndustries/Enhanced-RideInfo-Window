@@ -1,7 +1,6 @@
-import {ArgsRemove} from "../MainWindow/ArgsRemove";
+import {ArgsRemove} from "../Args/ArgsRemove";
 import {showWindowNameRide} from "./SetNameWindow"
-import {RideSetAppearanceArgs} from "./RideSetAppearanceArgs";
-import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
+import {RideSetAppearanceArgs} from "../Args/RideSetAppearanceArgs";
 import {ViewportArray} from "./ViewportArray";
 
 let emptyWindow: Window;
@@ -16,6 +15,7 @@ let updateViewport: (IDisposable | null) = null;
 
 export function showWindowRide(ride: Ride) {
 	ride1 = ride;
+    console.log()
     viewport = getAllVehiclesAndStations(ride1);
 	if (windowShowRide) {
 		windowShowRide.bringToFront();
@@ -92,6 +92,15 @@ export function showWindowRide(ride: Ride) {
                 width: 550,
                 height: 20,
                 text: "lift hill speed: " + ride1.liftHillSpeed
+            },
+            {
+                name: 'RideSatisfaction',
+                type: 'label',
+                x: 5,
+                y: 260,
+                width: 550,
+                height: 20,
+                text: "Downtime: " + ride1.satisfaction
             },
 			{
 				type: 'label',
@@ -303,7 +312,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 }
@@ -325,7 +334,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 },
@@ -346,7 +355,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 },
@@ -378,7 +387,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 }
@@ -400,7 +409,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 },
@@ -421,7 +430,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 },
@@ -487,7 +496,29 @@ export function showWindowRide(ride: Ride) {
                 selectedIndex: ride1.inspectionInterval,
                 onChange: (index) => {
                     ride1.inspectionInterval = index;
-                }
+                },
+            },
+            {
+                name: 'StationStyleLabel',
+                type: 'label',
+                x: 5,
+                y: 600,
+                width: 550,
+                height: 20,
+                text: "Station style: "
+            },
+            {
+                name: 'StationStyleDropdown',
+                type: 'dropdown',
+                x: 140,
+                y: 600,
+                width: 150,
+                height: 20,
+                items: ["Plain", "Wooden","Canvas Tent","Castle [Gray]","Castle [Brown]", "Jungle", "Log Cabin"," Classical/Roman","Abstract", "Snow/Ice","Pagoda","Space"],
+                selectedIndex: ride1.stationStyle,
+                onChange: (index) => {
+                    ride1.stationStyle = index;
+                },
             }
 		],
 		onClose() {

@@ -1,6 +1,6 @@
-import {showWindowNameRide} from "./SetNameWindow";
-import {ArgsRemove} from "../MainWindow/ArgsRemove";
-import {RideSetAppearanceArgs} from "./RideSetAppearanceArgs";
+import {showWindowNameRide} from "../RideWindow/SetNameWindow";
+import {ArgsRemove} from "../Args/ArgsRemove";
+import {RideSetAppearanceArgs} from "../Args/RideSetAppearanceArgs";
 
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";

@@ -1,7 +1,6 @@
-import {ArgsName} from "../MainWindow/ArgsName";
+import {ArgsName} from "../Args/ArgsName";
 import { windowShowRide} from "./RideWindow";
-import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
-import {windowShowStall} from "./StallWindow";
+import {windowShowStall} from "../StallWindow/StallWindow";
 
 let emptyWindow: Window;
 const windowTag = "Enhanced-RideInfo-Window";
@@ -41,7 +40,7 @@ export function showWindowNameRide(ride: Ride) {
 				image: 'copy',
 				onClick: () => {
                     if (rideName == "") {
-                        showWindowError("Ride name is empty")
+                        ui.showError("Error renaming ride name", "Ride name is empty")
                         return;
                     }
                     let rideSetNameArgs: RideSetNameArgs = new ArgsName(ride.id, rideName, 0);
