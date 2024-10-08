@@ -11,6 +11,7 @@ let index: number = 0;
 let windowShowNameRide: Window = ui.getWindow(windowTag);
 
 export function showWindowChooseGroup(): void {
+    index = 0;
     if (windowChooseGroup) {
         windowChooseGroup.bringToFront();
         return;

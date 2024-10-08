@@ -187,3 +187,20 @@ Only bugfixes and improvements will be made in this release.
 - Added the ability to add rides to a group that already exists.
 - Added the ability to remove rides from a group that already exists.
 - Continue the work on the new codebase CreditHunter (Updated from M1)
+
+## [M2 CreditHunter V2.2.0] - 2024-08-25
+### Added
+- Added the ability to add rides to a group that already exists. Done!
+- Added the ability to remove rides from a group that already exists. Done!
+- Added the ability to add new rides to a group that already exists. Done!
+- Added the ability to remove rides from a group that already exists. Done!
+- Added more information to the ride window. Done!
+- Added the ability to set the lift-hill speed of a ride in the ride window. Done!
+
+### Changed
+- updated the codebase CreditHunter. Done!
+- changed the way the rideWindow gets the name of the stations and the vehicles names, did not work correctly. Done!
+- changed so that when opened the window the index of the selected group will always set to 0 to match the first entry. Done!
+
+### Removed
+

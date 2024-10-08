@@ -3,6 +3,8 @@ import {ArgsRemove} from "../Args/ArgsRemove";
 import {closeWindowShowStall} from "../StallWindow/StallWindow";
 import {windowShowRide} from "../RideWindow/RideWindow";
 import {names, rides} from "../GroupName/GroupName";
+import {showWindowAddRideToExistingGroup} from "../AddGroupWindow/AddRideToExistingGroupWindow";
+import {showRemoveRideFromGroupWindow} from "../RemoveRideFromGroup/RemoveRideFromGroupWindow";
 
 const windowTag = "Enhanced-RideInfo-Window";
 export let windowViewGroup: Window = ui.getWindow(windowTag);
@@ -115,6 +117,34 @@ function getAllRidesOfAGroup(id: number): WidgetDesc[] {
                         console.log("RIDE IS REMOVED: ", result);
                     });
                 }
+            }
+        },
+        {
+            name: "AddRideToGroup",
+            type: "button",
+            width: 30,
+            height: 26,
+            x: 250,
+            y: 670,
+            image: "cheats",
+            tooltip: "Add ride to this group",
+            onClick: () => {
+                windowViewGroup.close();
+                showWindowAddRideToExistingGroup(rides[id][1], id);
+            }
+        },
+        {
+            name: "RemoveRideFromGroup",
+            type: "button",
+            width: 30,
+            height: 26,
+            x: 285,
+            y: 670,
+            image: 5165,
+            tooltip: "Remove ride from this group",
+            onClick: () => {
+                windowViewGroup.close();
+                showRemoveRideFromGroupWindow(rides[id][1], id);
             }
         },
         {

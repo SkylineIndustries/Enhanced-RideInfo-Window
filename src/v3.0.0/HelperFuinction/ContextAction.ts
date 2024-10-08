@@ -45,7 +45,7 @@ export function contextAction() {
                     windowShowRide.findWidget<SpinnerWidget>('maintenanceInterval').text = args.value.toString();
                 }
                 if (args.setting == 8) {
-                    windowShowRide.findWidget<LabelWidget>('lifthill').text = args.value.toString();
+                    windowShowRide.findWidget<LabelWidget>('spinnerLiftHillSpeed').text = args.value.toString();
                 }
             }
         }
