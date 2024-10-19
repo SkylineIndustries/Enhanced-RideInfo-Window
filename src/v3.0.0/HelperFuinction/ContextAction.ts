@@ -24,7 +24,11 @@ export function contextAction() {
 		}
         if (event.action == "ridesetsetting") {
             let args = event.args as ArgsSetting;
+            console.log(args)
             if (windowShowRide) {
+                if (args.setting == 0) {
+                    //windowShowRide.findWidget<DropdownWidget>('OperationMode').selectedIndex = args.value;
+                }
                 if (args.setting == 2) {
                     windowShowRide.findWidget<SpinnerWidget>('spinnerMinimun').text = args.value.toString();
                     if (ride1.maximumWaitingTime <= ride1.minimumWaitingTime) {

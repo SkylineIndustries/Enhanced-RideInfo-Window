@@ -11,8 +11,6 @@ let viewport: ViewportArray[] = [];
 let selectedStation: number = 0;
 let updateViewport: (IDisposable | null) = null;
 
-
-
 export function showWindowRide(ride: Ride) {
 	ride1 = ride;
     viewport = getAllVehiclesAndStations(ride1);
@@ -630,6 +628,28 @@ export function showWindowRide(ride: Ride) {
                 onIncrement: () => windowShowRide.findWidget<SpinnerWidget>('spinnerLiftHillSpeed').text = setLiftHillSpeed(ride1, "IN"),
                 onDecrement: () => windowShowRide.findWidget<SpinnerWidget>('spinnerLiftHillSpeed').text = setLiftHillSpeed(ride1, "DE")
             },
+            {
+                name: 'OperationModeLabel',
+                type: 'label',
+                x: 5,
+                y: 640,
+                width: 550,
+                height: 20,
+                text: "Operation mode: "
+            },
+            {
+                type: 'dropdown',
+                name: 'OperationModeDropdown',
+                x: 140,
+                y: 640,
+                width: 150,
+                height: 20,
+                items: getRideModes(),
+                selectedIndex: ride1.mode,
+                // onChange: (index) => {
+                //     context.executeAction("ridesetsetting", { ride: ride1.id, setting: 0, value: index, flags: 0 });
+                // }
+            },
 		],
 		onClose() {
             if (updateViewport != null) {
@@ -780,3 +800,55 @@ function setLiftHillSpeed(ride1: Ride, in1: string) : string {
     context.executeAction("ridesetsetting", { ride: ride1.id, setting: 8, value: speed, flags: 0 });
     return speed.toString();
 }
+
+
+function getRideModes(): string[] {
+    return ["Not available yet"];
+
+    var modes: string[] = [];
+    if (cheats.showAllOperatingModes){
+        modes = [
+            "Normal Mode",
+            "Continuous Circuit Mode",
+            "Reverse-Incline Shuttle Mode",
+            "Powered Launch (passing station)",
+            "Shuttle mode",
+            "Boat Hire Mode",
+            "Upward Launch",
+            "Rotating lift mode",
+            "Station to Station mode",
+            "Single ride per admission",
+            "Maze mode",
+            "Race mode",
+            "Bumber-car mode",
+            "Swing mode",
+            "Shop stall mode",
+            "Rotation mode",
+            "Forward rotation",
+            "Backward rotation",
+            "Film: Avenging aviators",
+            "3D film: Mouse tails",
+            "Space rings mode",
+            "Beginners mode",
+            "LIM-powered launch",
+            "Film: Thrill riders",
+            "3D film: Storm chasers",
+            "3D film: Space raiders",
+            "Intense mode",
+            "Berserk mode",
+            "Haunted house mode",
+            "Circus mode",
+            "Downward launch",
+            "Crooked house mode",
+            "Freefall drop mode",
+            "Continuous Circuit block sectioned Mode",
+            "Powered Launch (without passing station)",
+            "Powered Launch block sectioned Mode",
+        ]
+    }
+    else {
+
+    }
+    return modes;
+}
+
