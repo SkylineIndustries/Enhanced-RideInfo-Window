@@ -168,3 +168,39 @@ New features will be added in the next release **version 1.0.0** and higher.
 New features will be added in the next release **version 3.0.0** and higher.
 Only bugfixes and improvements will be made in this release.
 **THIS RELEASE WILL BE DOWNLOADABLE FROM GITHUB FOR GUEST TO USE**
+
+## [M1 CreditHunter V2.1.0] - 2024-08-24
+### Added
+- Added the ability to set the maintenanceInterval of a ride in the ride window.
+- Added the ability to change the station building of a ride in the ride window.
+- Added the ability to see more information about the downtime of a ride in the ride window.
+- added the ability to see guest information of a ride in the ride window.
+
+### Changed
+- Complete overhaul of the codebase to make it more efficient and easier to maintain called CreditHunter.
+- now use the default error window of the game. Done!
+
+### Removed
+
+### Planned features for M2
+- added a small window to preview the color of a vehicle/track in the ride window or a stall item in the stall window.
+- Added the ability to add rides to a group that already exists.
+- Added the ability to remove rides from a group that already exists.
+- Continue the work on the new codebase CreditHunter (Updated from M1)
+
+## [M2 CreditHunter V2.2.0] - 2024-08-25
+### Added
+- Added the ability to add rides to a group that already exists. Done!
+- Added the ability to remove rides from a group that already exists. Done!
+- Added the ability to add new rides to a group that already exists. Done!
+- Added the ability to remove rides from a group that already exists. Done!
+- Added more information to the ride window. Done!
+- Added the ability to set the lift-hill speed of a ride in the ride window. Done!
+
+### Changed
+- updated the codebase CreditHunter. Done!
+- changed the way the rideWindow gets the name of the stations and the vehicles names, did not work correctly. Done!
+- changed so that when opened the window the index of the selected group will always set to 0 to match the first entry. Done!
+
+### Removed
+

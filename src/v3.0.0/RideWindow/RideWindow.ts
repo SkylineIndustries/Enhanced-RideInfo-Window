@@ -1,7 +1,6 @@
-import {ArgsRemove} from "../MainWindow/ArgsRemove";
+import {ArgsRemove} from "../Args/ArgsRemove";
 import {showWindowNameRide} from "./SetNameWindow"
-import {RideSetAppearanceArgs} from "./RideSetAppearanceArgs";
-import {showWindowError} from "../ErrorWindow/ShowErrorWindow";
+import {RideSetAppearanceArgs} from "../Args/RideSetAppearanceArgs";
 import {ViewportArray} from "./ViewportArray";
 
 let emptyWindow: Window;
@@ -12,8 +11,6 @@ let viewport: ViewportArray[] = [];
 let selectedStation: number = 0;
 let updateViewport: (IDisposable | null) = null;
 
-
-
 export function showWindowRide(ride: Ride) {
 	ride1 = ride;
     viewport = getAllVehiclesAndStations(ride1);
@@ -21,7 +18,8 @@ export function showWindowRide(ride: Ride) {
 		windowShowRide.bringToFront();
 		return;
 	}
-	const windowDesc: WindowDesc = {
+
+    const windowDesc: WindowDesc = {
 		classification: windowTag,
 		width: 475,
 		height: 720,
@@ -92,6 +90,105 @@ export function showWindowRide(ride: Ride) {
                 width: 550,
                 height: 20,
                 text: "lift hill speed: " + ride1.liftHillSpeed
+            },
+            {
+                name: 'RideSatisfaction',
+                type: 'label',
+                x: 5,
+                y: 260,
+                width: 550,
+                height: 20,
+                text: "Downtime: " + ride1.satisfaction
+            },
+            {
+                name: 'MaxSpeed',
+                type: 'label',
+                x: 5,
+                y: 280,
+                width: 550,
+                height: 20,
+                text: "Max speed in MPH: " + ride1.maxSpeed
+            },
+            {
+                name: 'AVGSpeed',
+                type: 'label',
+                x: 5,
+                y: 300,
+                width: 550,
+                height: 20,
+                text: "Avg speed in MPH: " + ride1.averageSpeed
+            },
+            {
+                name: 'RideTime',
+                type: 'label',
+                x: 5,
+                y: 320,
+                width: 550,
+                height: 20,
+                text: "Ride time: " + ride1.rideTime
+            },
+            {
+                name: 'RideLength',
+                type: 'label',
+                x: 5,
+                y: 340,
+                width: 550,
+                height: 20,
+                text: "Ride length: " + ride1.rideLength
+            },
+            {
+                name: 'maxPositiveVerticalGs',
+                type: 'label',
+                x: 5,
+                y: 360,
+                width: 550,
+                height: 20,
+                text: "PvGs: " + ride1.maxPositiveVerticalGs
+            },
+            {
+                name: 'maxNegativeVerticalGs',
+                type: 'label',
+                x: 5,
+                y: 380,
+                width: 550,
+                height: 20,
+                text: "NvGs: " + ride1.maxNegativeVerticalGs
+            },
+            {
+                name: 'maxLateralGs',
+                type: 'label',
+                x: 5,
+                y: 400,
+                width: 550,
+                height: 20,
+                text: "Max lateral Gs: " + ride1.maxLateralGs
+            },
+            {
+                name: 'numDrops',
+                type: 'label',
+                x: 5,
+                y: 420,
+                width: 550,
+                height: 20,
+                text: "Number of drops: " + ride1.numDrops
+            },
+            {
+                name: 'highestDropHeight',
+                type: 'label',
+                x: 5,
+                y: 440,
+                width: 550,
+                height: 20,
+                text: "Highest drop height: " + ride1.highestDropHeight
+            },
+            {
+                name: 'totalAirTime',
+                type: 'label',
+                x: 5,
+                y: 460,
+                width: 550,
+                height: 20,
+                text: "Total air time: " + ride1.totalAirTime
             },
 			{
 				type: 'label',
@@ -189,7 +286,7 @@ export function showWindowRide(ride: Ride) {
 			{
 				name: 'viewportShowRide',
 				type: 'viewport',
-				x: 120,
+				x: 140,
 				y: 20,
 				width: 250,
 				height: 400,
@@ -199,7 +296,7 @@ export function showWindowRide(ride: Ride) {
 				name: 'dropdownShowRide',
 				type: 'dropdown',
                 selectedIndex: 0,
-				x: 120,
+				x: 140,
 				y: 420,
 				width: 250,
 				height: 30,
@@ -303,7 +400,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 }
@@ -325,7 +422,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 },
@@ -346,7 +443,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 },
@@ -378,7 +475,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 }
@@ -400,7 +497,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 },
@@ -421,7 +518,7 @@ export function showWindowRide(ride: Ride) {
                         })
                     }
                     catch (e) {
-                        showWindowError("Error setting colour, please try again.")
+                        ui.showError("Error setting colour", "Error setting colour, please try again.")
                         return
                     }
                 },
@@ -487,8 +584,72 @@ export function showWindowRide(ride: Ride) {
                 selectedIndex: ride1.inspectionInterval,
                 onChange: (index) => {
                     ride1.inspectionInterval = index;
-                }
-            }
+                },
+            },
+            {
+                name: 'StationStyleLabel',
+                type: 'label',
+                x: 5,
+                y: 600,
+                width: 550,
+                height: 20,
+                text: "Station style: "
+            },
+            {
+                name: 'StationStyleDropdown',
+                type: 'dropdown',
+                x: 140,
+                y: 600,
+                width: 150,
+                height: 20,
+                items: ["Plain", "Wooden","Canvas Tent","Castle [Gray]","Castle [Brown]", "Jungle", "Log Cabin"," Classical/Roman","Abstract", "Snow/Ice","Pagoda","Space"],
+                selectedIndex: ride1.stationStyle,
+                onChange: (index) => {
+                    ride1.stationStyle = index;
+                },
+            },
+            {
+                name: 'LifthillSpeedLabel',
+                type: 'label',
+                x: 5,
+                y: 620,
+                width: 550,
+                height: 20,
+                text: "Lift hill speed in MPH: "
+            },
+            {
+                type: 'spinner',
+                name: 'spinnerLiftHillSpeed',
+                x: 140,
+                y: 620,
+                width: 100,
+                height: 20,
+                text: ride1.liftHillSpeed.toString(),
+                onIncrement: () => windowShowRide.findWidget<SpinnerWidget>('spinnerLiftHillSpeed').text = setLiftHillSpeed(ride1, "IN"),
+                onDecrement: () => windowShowRide.findWidget<SpinnerWidget>('spinnerLiftHillSpeed').text = setLiftHillSpeed(ride1, "DE")
+            },
+            {
+                name: 'OperationModeLabel',
+                type: 'label',
+                x: 5,
+                y: 640,
+                width: 550,
+                height: 20,
+                text: "Operation mode: "
+            },
+            {
+                type: 'dropdown',
+                name: 'OperationModeDropdown',
+                x: 140,
+                y: 640,
+                width: 150,
+                height: 20,
+                items: getRideModes(),
+                selectedIndex: ride1.mode,
+                // onChange: (index) => {
+                //     context.executeAction("ridesetsetting", { ride: ride1.id, setting: 0, value: index, flags: 0 });
+                // }
+            },
 		],
 		onClose() {
             if (updateViewport != null) {
@@ -578,16 +739,18 @@ function getAllVehiclesAndStations(ride1: Ride) {
     }
     id = 1;
     for (const element of ride1.vehicles) {
-        let vehicle: CoordsXYZ = {
-            x: map.getEntity(element).x,
-            y: map.getEntity(element).y,
-            z: map.getEntity(element).z
-        }
         if (element != null) {
-            let viewportObject: ViewportArray = new ViewportArray(vehicle, "Vehicle " + id);
-            viewportObject.setVehicleNumber(element);
-            viewport.push(viewportObject);
-            id++;
+            if (map.getEntity(element) != null) {
+                let vehicle: CoordsXYZ = {
+                    x: map.getEntity(element).x,
+                    y: map.getEntity(element).y,
+                    z: map.getEntity(element).z
+                }
+                let viewportObject: ViewportArray = new ViewportArray(vehicle, "Vehicle " + id);
+                viewportObject.setVehicleNumber(element);
+                viewport.push(viewportObject);
+                id++;
+            }
         }
     }
     return viewport;
@@ -622,3 +785,70 @@ function disableUpdateViewport(){
     updateViewport?.dispose();
     updateViewport = null;
 }
+
+
+function setLiftHillSpeed(ride1: Ride, in1: string) : string {
+
+    let speed: number = ride1.liftHillSpeed;
+
+    if (in1 === 'IN' && speed >= ride1.minLiftHillSpeed && speed < ride1.maxLiftHillSpeed) {
+        speed++;
+    }
+    else if (in1 === 'DE' && speed > ride1.minLiftHillSpeed && speed <= ride1.maxLiftHillSpeed) {
+        speed--;
+    }
+    context.executeAction("ridesetsetting", { ride: ride1.id, setting: 8, value: speed, flags: 0 });
+    return speed.toString();
+}
+
+
+function getRideModes(): string[] {
+    return ["Not available yet"];
+
+    var modes: string[] = [];
+    if (cheats.showAllOperatingModes){
+        modes = [
+            "Normal Mode",
+            "Continuous Circuit Mode",
+            "Reverse-Incline Shuttle Mode",
+            "Powered Launch (passing station)",
+            "Shuttle mode",
+            "Boat Hire Mode",
+            "Upward Launch",
+            "Rotating lift mode",
+            "Station to Station mode",
+            "Single ride per admission",
+            "Maze mode",
+            "Race mode",
+            "Bumber-car mode",
+            "Swing mode",
+            "Shop stall mode",
+            "Rotation mode",
+            "Forward rotation",
+            "Backward rotation",
+            "Film: Avenging aviators",
+            "3D film: Mouse tails",
+            "Space rings mode",
+            "Beginners mode",
+            "LIM-powered launch",
+            "Film: Thrill riders",
+            "3D film: Storm chasers",
+            "3D film: Space raiders",
+            "Intense mode",
+            "Berserk mode",
+            "Haunted house mode",
+            "Circus mode",
+            "Downward launch",
+            "Crooked house mode",
+            "Freefall drop mode",
+            "Continuous Circuit block sectioned Mode",
+            "Powered Launch (without passing station)",
+            "Powered Launch block sectioned Mode",
+        ]
+    }
+    else {
+
+    }
+    return modes;
+}
+

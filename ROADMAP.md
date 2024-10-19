@@ -14,24 +14,33 @@ This version is the first version released to the public.
 It will no longer be updated, unless a critical bug is found. A new version is being worked on and will be released in the future.
 It is recommended to always use the latest version of the codebase of the enhanced ride window. As this is the most up-to-date version and is always updated to work with the latest version of the game.
 
-## **PLANNED RELEASES**
-
-These releases are not yet available to the public. These releases are planned and are being worked on. These releases will be released in the future.
 
 ## ## [RELEASE AdventureMaster V2.0.0 GUEST EDITION] - 2024-03-08
-This version is currently being worked on. It will be released in the future.
+This version is ready for the public and is a stable version.
 This version will contain new features and improvements to the enhanced ride window.
 This version will be released when it is ready for the public.
 It will be a stable version and will most likely not break anything.
 **THIS VERSION WILL BE AVAILABLE TO THE PUBLIC, AND IS FREE TO GET AND USED**
 
-## ## [RELEASE AdventureMaster V2.0.0 DEVELOPER EDITION] - TO BE ANNOUNCED
+## **PLANNED RELEASES**
+
+These releases are not yet available to the public. These releases are planned and are being worked on. These releases will be released in the future.
+
+##  [RELEASE AdventureMaster V2.0.0 DEVELOPER EDITION] - TO BE ANNOUNCED
 THis version is currently being worked on. It will be released in the future.
-This version will be a developer edition and will be released as a libary for developers to use in their own projects.
+This version will be a developer edition and will be released as a library for developers to use in their own projects.
 This version will contain new features and improvements to the enhanced ride window.
 This version will be released when it is ready for the public.
 It will be a stable version and will most likely not break anything.
 **THIS VERSION WILL BE ONLY AVAILABLE TO DEVELOPERS OF THE OPEN_RCT COMMUNITY. CONTACT THE OWNER OF THE PLUGIN TO GET A COPY OF THE LIB**
+
+## [RELEASE CreditHunter V3.0.0] - TO BE ANNOUNCED
+This version is not yet available to the public. This version is currently being worked on and will be released in the future.
+This version will contain new features and improvements to the enhanced ride window.
+This version will be released when it is ready for the public.
+It will be a stable version and will most likely not break anything.
+**THIS VERSION WILL BE AVAILABLE TO THE PUBLIC, AND IS FREE TO GET AND USED**
+
 
 ## **DEMO/MILESTONE/BETA RELEASES**
 

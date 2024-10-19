@@ -1,10 +1,12 @@
-import { showWindowChooseGroup, setRides, getRides, setNames, getNames, contextAction, Rides } from './MainWindow/window';
+import {showWindowChooseGroup} from "./v3.0.0/GroupEditorWindow/GroupEditorWindow";
+import {getNames, getRides, Rides, setNames, setRides} from "./v3.0.0/GroupName/GroupName";
+import {contextAction} from "./v3.0.0/HelperFuinction/ContextAction";
 
 let saveData = context.getParkStorage();
 type RidesId = [string, number[]];
 
 export function startup() {
-    console.log("Successfully loaded Enhanced Ride Info Window: CODEBASE AdventureMaster");
+    console.log("Successfully loaded Enhanced Ride Info Window: CODEBASE CreditHunter");
 	if (typeof ui !== "undefined") {
 		ui.registerMenuItem("Enhanced-RideInfo-Window", () => showWindowChooseGroup());
         context.subscribe("map.save", () => {
@@ -32,7 +34,6 @@ export function startup() {
             setRides(ridesArray);
             setNames(namesArray);
         }
-
         contextAction()
     }
 }

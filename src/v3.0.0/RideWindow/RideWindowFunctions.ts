@@ -1,5 +1,5 @@
 import {showWindowRide} from "./RideWindow";
-import {showWindowStall} from "./StallWindow";
+import {showWindowStall} from "../StallWindow/StallWindow";
 
 export function openRideWindow(item: Ride) {
     if (item.classification === "ride"){
