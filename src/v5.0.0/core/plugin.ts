@@ -1,10 +1,10 @@
-/// <reference path="../lib/openrct2.d.ts" />
+/// <reference path="../../../lib/openrct2.d.ts" />
 
-import { startup } from "./startup";
+import { startup } from "../../startup";
 
 registerPlugin({
 	name: "EnhancedWindow",
-	version: "3.0.0",
+	version: "5.0.0",
 	authors: ["SkylineIndustries"],
 	type: "remote",
 	licence: "MIT",

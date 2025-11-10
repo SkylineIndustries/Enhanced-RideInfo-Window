@@ -1,0 +1,4 @@
+type ridesList = [
+    string,
+    string[],
+]
