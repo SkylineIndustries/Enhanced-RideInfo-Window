@@ -11,7 +11,7 @@ const options =
 	/**
 	 * Change the file name of the output file here.
 	 */
-	filename: "Enhanced-RideInfo-Window-V3.0.0-CreditHunter.js",
+	filename: "Enhanced-RideInfo-Window-V5.0.0.js",
 
 	/**
 	 * Determines in what build mode the plugin should be build. The default here takes
@@ -62,7 +62,7 @@ async function getOutput()
  * @type {import("rollup").RollupOptions}
  */
 const config = {
-	input: "./src/plugin.ts",
+	input: "./src/v5.0.0/core/plugin.ts",
 	output: {
 		file: await getOutput(),
 		format: "iife",
