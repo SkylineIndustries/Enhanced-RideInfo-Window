@@ -6,9 +6,13 @@
 export abstract class BaseWindow {
     protected window?: Window;
     protected windowTag: string;
+    protected groupId?: number;
+    protected rideId?: string;
 
-    constructor(windowTag: string) {
+    constructor(windowTag: string, groupId?: number, rideId?: string) {
         this.windowTag = windowTag;
+        this.groupId = groupId;
+        this.rideId = rideId;
     }
 
     abstract build(window?: Window): WindowDesc;

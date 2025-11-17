@@ -30,8 +30,10 @@ export class HomeWindow extends BaseWindow {
                     removeGroup(this.selectedGroupIndex);
                 }),
                 WidgetFactory.button(220, 90, 30, 26, "copy", "", "renameGroup", "Rename selected group", () => {
+                    WindowManager.openRenameGroup(this.selectedGroupIndex);
                 }),
                 WidgetFactory.button(300, 90, 30, 26, "fast_forward", "", "openGroup", "Open selected group", () => {
+                    WindowManager.openGroupWindow(this.selectedGroupIndex);
                 }),
                 WidgetFactory.label((width - 280) / 2, height - 30, 280, 20, "MIT License - Enhanced Ride Info by SkylineIndustries"),
             ],
